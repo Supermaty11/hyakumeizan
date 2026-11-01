@@ -14,7 +14,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/44.075833333333335/145.12222222222223",
     "yamapId": 81,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "岩尾別温泉ルート",
+        "stays": 1,
+        "meters": 12743,
+        "seconds": 34140,
+        "up": 1461
+      },
+      {
+        "name": "岩尾別登山口-羅臼岳-南岳-知円別岳-硫黄山-硫黄山登山口 縦走コ…",
+        "stays": 2,
+        "meters": 21449,
+        "seconds": 60240,
+        "up": 2414
+      }
+    ]
   },
   {
     "id": 8,
@@ -31,7 +47,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/43.76555555555556/144.71777777777777",
     "yamapId": 82,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "斜里岳登山口-斜里岳 往復コース",
+        "stays": 1,
+        "meters": 8548,
+        "seconds": 23100,
+        "up": 965
+      }
+    ]
   },
   {
     "id": 14,
@@ -48,7 +73,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/43.38638888888889/144.00861111111112",
     "yamapId": 83,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "雌阿寒温泉コース",
+        "stays": 1,
+        "meters": 5474,
+        "seconds": 15420,
+        "up": 797
+      }
+    ]
   },
   {
     "id": 18,
@@ -65,7 +99,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/45.17861111111111/141.24194444444444",
     "yamapId": 80,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "鴛泊ルート",
+        "stays": 1,
+        "meters": 12027,
+        "seconds": 31920,
+        "up": 1572
+      }
+    ]
   },
   {
     "id": 35,
@@ -82,7 +125,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/43.66361111111111/142.85416666666666",
     "yamapId": 105,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "姿見駅-旭岳-間宮岳-中岳温泉-裾合平 周回コース",
+        "stays": 1,
+        "meters": 11431,
+        "seconds": 23940,
+        "up": 951
+      }
+    ]
   },
   {
     "id": 41,
@@ -99,7 +151,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/43.52722222222222/142.8488888888889",
     "yamapId": 84,
     "days": 2,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "トムラウシ山往復",
+        "stays": 1,
+        "meters": 16953,
+        "seconds": 40920,
+        "up": 1549
+      },
+      {
+        "name": "トムラウシ短縮コース登山口-前トム平-トムラウシ山 往復コース",
+        "stays": 2,
+        "meters": 17127,
+        "seconds": 41160,
+        "up": 1550
+      },
+      {
+        "name": "七合目リフト駅-黒岳-北海岳-忠別沼-忠別岳-五色岳-化雲 縦走コ…",
+        "stays": 3,
+        "meters": 39360,
+        "seconds": 76320,
+        "up": 2524
+      }
+    ]
   },
   {
     "id": 44,
@@ -116,7 +191,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/43.41777777777777/142.6863888888889",
     "yamapId": 85,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "十勝岳往復",
+        "stays": 1,
+        "meters": 10326,
+        "seconds": 24600,
+        "up": 1141
+      }
+    ]
   },
   {
     "id": 75,
@@ -133,7 +217,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/42.71944444444445/142.68277777777777",
     "yamapId": 136,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "幌尻岳 往復コース",
+        "stays": 1,
+        "meters": 7599,
+        "seconds": 26640,
+        "up": 1295
+      },
+      {
+        "name": "",
+        "stays": 2,
+        "meters": 27444,
+        "seconds": 63240,
+        "up": 2051
+      },
+      {
+        "name": "幌尻岳 往復コース",
+        "stays": 3,
+        "meters": 40429,
+        "seconds": 75480,
+        "up": 2896
+      }
+    ]
   },
   {
     "id": 105,
@@ -150,7 +257,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/42.82666666666667/140.8113888888889",
     "yamapId": 153,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "京極登山口-羊蹄山 往復コース",
+        "stays": 1,
+        "meters": 8978,
+        "seconds": 29640,
+        "up": 1507
+      }
+    ]
   },
   {
     "id": 146,
@@ -167,7 +283,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/39.558611111111105/141.4886111111111",
     "yamapId": 39,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "小田越コース",
+        "stays": 1,
+        "meters": 9007,
+        "seconds": 17880,
+        "up": 883
+      }
+    ]
   },
   {
     "id": 156,
@@ -184,7 +309,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/40.65888888888889/140.87722222222223",
     "yamapId": 131,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "山頂公園駅-田茂萢岳-井戸岳-八甲田山-毛無岱湿原経由八甲 縦走コ…",
+        "stays": 1,
+        "meters": 8874,
+        "seconds": 16740,
+        "up": 533
+      }
+    ]
   },
   {
     "id": 167,
@@ -201,7 +335,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/39.95777777777778/140.85416666666666",
     "yamapId": 37,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "大深温泉バス停-八幡平 往復コース",
+        "stays": 1,
+        "meters": 7826,
+        "seconds": 12420,
+        "up": 472
+      }
+    ]
   },
   {
     "id": 171,
@@ -218,7 +361,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/39.8525/141.0011111111111",
     "yamapId": 38,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "岩手山 馬返し登山口コース",
+        "stays": 1,
+        "meters": 10823,
+        "seconds": 30000,
+        "up": 1450
+      }
+    ]
   },
   {
     "id": 174,
@@ -235,7 +387,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/40.655833333333334/140.30305555555557",
     "yamapId": 132,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "岩木山 往復コース",
+        "stays": 1,
+        "meters": 5661,
+        "seconds": 17580,
+        "up": 930
+      }
+    ]
   },
   {
     "id": 185,
@@ -252,7 +413,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/39.09916666666667/140.04888888888888",
     "yamapId": 154,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "象潟口（鉾立）",
+        "stays": 1,
+        "meters": 14601,
+        "seconds": 32640,
+        "up": 1399
+      }
+    ]
   },
   {
     "id": 212,
@@ -269,7 +439,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/38.14361111111111/140.44",
     "yamapId": 191,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "地蔵山頂駅-蔵王山 往復コース",
+        "stays": 1,
+        "meters": 3236,
+        "seconds": 6300,
+        "up": 262
+      }
+    ]
   },
   {
     "id": 219,
@@ -287,7 +466,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/37.73833333333334/140.14083333333332",
     "yamapId": 156,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "ロープウェイ終点から西大巓-西吾妻山",
+        "stays": 1,
+        "meters": 7116,
+        "seconds": 19800,
+        "up": 876
+      }
+    ]
   },
   {
     "id": 227,
@@ -304,7 +492,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/37.62111111111111/140.28777777777776",
     "yamapId": 157,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "奥岳-薬師岳-安達太良山 往復コース",
+        "stays": 1,
+        "meters": 8931,
+        "seconds": 18720,
+        "up": 757
+      }
+    ]
   },
   {
     "id": 228,
@@ -321,7 +518,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/37.60111111111111/140.07222222222222",
     "yamapId": 158,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "磐梯山 往復コース",
+        "stays": 1,
+        "meters": 6915,
+        "seconds": 20100,
+        "up": 803
+      }
+    ]
   },
   {
     "id": 232,
@@ -338,7 +544,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/38.54888888888889/140.02694444444447",
     "yamapId": 43,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "姥沢-牛首-月山 往復コース",
+        "stays": 1,
+        "meters": 9669,
+        "seconds": 20580,
+        "up": 888
+      }
+    ]
   },
   {
     "id": 237,
@@ -355,7 +570,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/38.260555555555555/139.92222222222222",
     "yamapId": 44,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "古寺鉱泉コース",
+        "stays": 1,
+        "meters": 15889,
+        "seconds": 35040,
+        "up": 1683
+      },
+      {
+        "name": "清太岩山-ユーフン山-竜門山-西朝日岳-大朝日岳-小朝日岳 周回コ…",
+        "stays": 2,
+        "meters": 20965,
+        "seconds": 46080,
+        "up": 2146
+      }
+    ]
   },
   {
     "id": 244,
@@ -372,7 +603,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/37.85472222222222/139.7072222222222",
     "yamapId": 155,
     "days": 2,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "飯豊山往復",
+        "stays": 1,
+        "meters": 20868,
+        "seconds": 51540,
+        "up": 2245
+      },
+      {
+        "name": "御沢登山口-横峰-草履塚-飯豊山神社-飯豊山-駒形山-御西 周回コ…",
+        "stays": 2,
+        "meters": 26380,
+        "seconds": 60360,
+        "up": 2540
+      },
+      {
+        "name": "地蔵岳-草履塚-飯豊山神社-飯豊山 往復コース",
+        "stays": 3,
+        "meters": 21328,
+        "seconds": 53340,
+        "up": 2328
+      }
+    ]
   },
   {
     "id": 263,
@@ -389,7 +643,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.22527777777778/140.10666666666665",
     "yamapId": 90,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "おたつ石コース 登山口-筑波山 往復コース",
+        "stays": 1,
+        "meters": 3111,
+        "seconds": 7800,
+        "up": 371
+      }
+    ]
   },
   {
     "id": 265,
@@ -406,7 +669,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/37.124722222222225/139.96305555555554",
     "yamapId": 8564,
     "days": 2,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "那須ロープウェイ 山頂駅-茶臼岳-朝日の肩-朝日岳-熊見曽 縦走コ…",
+        "stays": 1,
+        "meters": 10161,
+        "seconds": 20760,
+        "up": 806
+      },
+      {
+        "name": "峠の茶屋登山口-茶臼岳-隠居倉-朝日の肩-朝日岳 周回コース",
+        "stays": 2,
+        "meters": 9516,
+        "seconds": 22500,
+        "up": 803
+      }
+    ]
   },
   {
     "id": 274,
@@ -424,7 +703,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.79861111111111/139.37583333333333",
     "yamapId": 252,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "金精峠登山口-金精山-五色山-前白根山-日光白根山 周回コース",
+        "stays": 1,
+        "meters": 9937,
+        "seconds": 30420,
+        "up": 1337
+      }
+    ]
   },
   {
     "id": 275,
@@ -442,7 +730,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.69/139.33694444444444",
     "yamapId": 169,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "皇海山登山口-庚申山-駒掛山-薬師岳-鋸山-皇海山 往復コース",
+        "stays": 1,
+        "meters": 20907,
+        "seconds": 49740,
+        "up": 2206
+      }
+    ]
   },
   {
     "id": 279,
@@ -459,7 +756,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.56027777777778/139.19333333333333",
     "yamapId": 21,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "黒檜山-駒ヶ岳コース",
+        "stays": 1,
+        "meters": 4900,
+        "seconds": 12720,
+        "up": 571
+      }
+    ]
   },
   {
     "id": 291,
@@ -476,7 +782,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/37.0475/139.3536111111111",
     "yamapId": 159,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "滝沢登山口-駒ノ大池-会津駒ヶ岳 往復コース",
+        "stays": 1,
+        "meters": 8713,
+        "seconds": 21240,
+        "up": 1086
+      },
+      {
+        "name": "滝沢登山口-駒ノ大池-会津駒ヶ岳-中門岳 往復コース",
+        "stays": 2,
+        "meters": 13743,
+        "seconds": 28740,
+        "up": 1361
+      }
+    ]
   },
   {
     "id": 292,
@@ -494,7 +816,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/37.00194444444445/139.17083333333332",
     "yamapId": 161,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "平ヶ岳（プリンスルート） 往復コース",
+        "stays": 1,
+        "meters": 8674,
+        "seconds": 24060,
+        "up": 1048
+      }
+    ]
   },
   {
     "id": 294,
@@ -511,7 +842,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.955000000000005/139.28527777777776",
     "yamapId": 163,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "広沢田代-熊沢田代-燧ヶ岳 縦走コース",
+        "stays": 1,
+        "meters": 8306,
+        "seconds": 27360,
+        "up": 939
+      },
+      {
+        "name": "一ノ瀬バス停-尾瀬沼-燧ヶ岳-尾瀬ヶ原-至仏山-鳩待峠 縦走コース",
+        "stays": 2,
+        "meters": 26461,
+        "seconds": 64500,
+        "up": 2008
+      }
+    ]
   },
   {
     "id": 295,
@@ -528,7 +875,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.90361111111111/139.17333333333332",
     "yamapId": 103,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "至仏山-小至仏山-鳩待峠 縦走コース",
+        "stays": 1,
+        "meters": 7364,
+        "seconds": 22020,
+        "up": 864
+      },
+      {
+        "name": "鳩待峠-至仏山-小至仏山 周回コース",
+        "stays": 2,
+        "meters": 22056,
+        "seconds": 41700,
+        "up": 943
+      }
+    ]
   },
   {
     "id": 296,
@@ -545,7 +908,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.805277777777775/139.13250000000002",
     "yamapId": 170,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "セビオス岳-武尊山 往復コース",
+        "stays": 1,
+        "meters": 12280,
+        "seconds": 23880,
+        "up": 867
+      }
+    ]
   },
   {
     "id": 304,
@@ -562,7 +934,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/37.12361111111111/139.07527777777778",
     "yamapId": 160,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "越後駒ヶ岳 往復",
+        "stays": 1,
+        "meters": 14387,
+        "seconds": 30600,
+        "up": 1333
+      }
+    ]
   },
   {
     "id": 309,
@@ -580,7 +961,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.978611111111114/138.96416666666664",
     "yamapId": 162,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "巻機山登山口-前巻機-巻機山 往復コース",
+        "stays": 1,
+        "meters": 10788,
+        "seconds": 28920,
+        "up": 1400
+      }
+    ]
   },
   {
     "id": 315,
@@ -598,7 +988,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.83722222222222/138.92999999999998",
     "yamapId": 164,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "天神尾根コース",
+        "stays": 1,
+        "meters": 6541,
+        "seconds": 17340,
+        "up": 890
+      },
+      {
+        "name": "JAPAN TRAIL谷川連峰",
+        "stays": 2,
+        "meters": 19125,
+        "seconds": 52380,
+        "up": 2197
+      }
+    ]
   },
   {
     "id": 319,
@@ -616,7 +1022,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.84583333333334/138.6902777777778",
     "yamapId": 152,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "祓川登山口-山頂駅-神楽ヶ峰-苗場山 縦走コース",
+        "stays": 1,
+        "meters": 6792,
+        "seconds": 16680,
+        "up": 1076
+      },
+      {
+        "name": "山頂駅-神楽ヶ峰-苗場山-苗場山神社 縦走コース",
+        "stays": 2,
+        "meters": 9829,
+        "seconds": 25740,
+        "up": 931
+      }
+    ]
   },
   {
     "id": 329,
@@ -633,7 +1055,8 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.62024/138.53098",
     "yamapId": 171,
     "days": null,
-    "transit": null
+    "transit": null,
+    "routes": []
   },
   {
     "id": 331,
@@ -651,7 +1074,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.541666666666664/138.41305555555556",
     "yamapId": 51,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "四阿山-花童子の宮跡 周回コース",
+        "stays": 1,
+        "meters": 7790,
+        "seconds": 18900,
+        "up": 862
+      }
+    ]
   },
   {
     "id": 335,
@@ -669,7 +1101,8 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.406666666666666/138.52305555555557",
     "yamapId": 172,
     "days": null,
-    "transit": null
+    "transit": null,
+    "routes": []
   },
   {
     "id": 345,
@@ -686,7 +1119,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.02333333333333/138.8413888888889",
     "yamapId": 24,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "上落合橋登山口-八丁尾根-両神山 往復コース",
+        "stays": 1,
+        "meters": 5682,
+        "seconds": 26700,
+        "up": 905
+      }
+    ]
   },
   {
     "id": 348,
@@ -705,7 +1147,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.90888888888889/138.7288888888889",
     "yamapId": 26,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "甲武信ヶ岳 周回コース",
+        "stays": 1,
+        "meters": 7546,
+        "seconds": 17100,
+        "up": 1034
+      }
+    ]
   },
   {
     "id": 350,
@@ -722,7 +1173,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.89333333333333/138.59194444444446",
     "yamapId": 177,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "瑞牆山荘コース",
+        "stays": 1,
+        "meters": 5424,
+        "seconds": 20220,
+        "up": 928
+      },
+      {
+        "name": "瑞牆山荘-瑞牆山-丸山-金峰山コース",
+        "stays": 2,
+        "meters": 13930,
+        "seconds": 45360,
+        "up": 1847
+      }
+    ]
   },
   {
     "id": 351,
@@ -740,7 +1207,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.87138888888889/138.6252777777778",
     "yamapId": 176,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "瑞牆山荘-金峰山 往復コース",
+        "stays": 1,
+        "meters": 10652,
+        "seconds": 31080,
+        "up": 1214
+      },
+      {
+        "name": "金峰山 表参道・御嶽古道ルート",
+        "stays": 2,
+        "meters": 14763,
+        "seconds": 38400,
+        "up": 1559
+      }
+    ]
   },
   {
     "id": 363,
@@ -758,7 +1241,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.855555555555554/138.9438888888889",
     "yamapId": 25,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "鴨沢バス停-小袖登山口-堂所-七ツ石山-五十人平野営場管理 縦走コ…",
+        "stays": 1,
+        "meters": 11605,
+        "seconds": 23400,
+        "up": 1726
+      },
+      {
+        "name": "小袖登山口-七ツ石山-雲取山-雲取山荘 往復コース",
+        "stays": 2,
+        "meters": 21133,
+        "seconds": 39180,
+        "up": 1887
+      }
+    ]
   },
   {
     "id": 368,
@@ -775,7 +1274,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.74888888888889/138.84555555555556",
     "yamapId": 178,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "JAPAN TRAIL大菩薩連嶺登山道③（湯の沢峠 - 大菩薩嶺）",
+        "stays": 1,
+        "meters": 9231,
+        "seconds": 19080,
+        "up": 986
+      }
+    ]
   },
   {
     "id": 387,
@@ -792,7 +1300,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.47416666666667/139.1627777777778",
     "yamapId": 110,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "大倉バス停-堀山-塔ノ岳-日高-竜ヶ馬場-丹沢山 縦走コース",
+        "stays": 1,
+        "meters": 9035,
+        "seconds": 21240,
+        "up": 1514
+      },
+      {
+        "name": "三ノ塔-烏尾山-行者ヶ岳-木ノ又大日-塔ノ岳-日高-竜ヶ馬 縦走コ…",
+        "stays": 2,
+        "meters": 21951,
+        "seconds": 53580,
+        "up": 2474
+      }
+    ]
   },
   {
     "id": 396,
@@ -810,7 +1334,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.36083333333333/138.7275",
     "yamapId": 14,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "富士宮ルート",
+        "stays": 1,
+        "meters": 8153,
+        "seconds": 32520,
+        "up": 1389
+      },
+      {
+        "name": "富士宮口五合目-宝永山-富士山-富士山 縦走コース",
+        "stays": 2,
+        "meters": 16339,
+        "seconds": 41400,
+        "up": 1556
+      }
+    ]
   },
   {
     "id": 404,
@@ -827,7 +1367,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/34.86277777777778/139.00166666666666",
     "yamapId": 179,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "天城山 シャクナゲコース",
+        "stays": 1,
+        "meters": 8142,
+        "seconds": 18660,
+        "up": 705
+      }
+    ]
   },
   {
     "id": 430,
@@ -845,7 +1394,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.901944444444446/137.96249999999998",
     "yamapId": 165,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "雨飾山 往復",
+        "stays": 1,
+        "meters": 7505,
+        "seconds": 22800,
+        "up": 1052
+      }
+    ]
   },
   {
     "id": 431,
@@ -862,7 +1420,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.922777777777775/138.06805555555556",
     "yamapId": 167,
     "days": 2,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "火打山 往復コース",
+        "stays": 1,
+        "meters": 16229,
+        "seconds": 36840,
+        "up": 1293
+      },
+      {
+        "name": "笹ヶ峰-火打山-茶臼山-大倉乗越-妙高山 周回コース",
+        "stays": 2,
+        "meters": 23231,
+        "seconds": 61260,
+        "up": 2196
+      }
+    ]
   },
   {
     "id": 432,
@@ -879,7 +1453,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.89138888888889/138.11333333333331",
     "yamapId": 166,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "山頂駅-妙高山 往復コース",
+        "stays": 1,
+        "meters": 9371,
+        "seconds": 26880,
+        "up": 1257
+      },
+      {
+        "name": "笹ヶ峰-火打山-茶臼山-大倉乗越-妙高山 周回コース",
+        "stays": 2,
+        "meters": 23231,
+        "seconds": 61260,
+        "up": 2196
+      }
+    ]
   },
   {
     "id": 434,
@@ -897,7 +1487,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.8/138.05194444444444",
     "yamapId": 168,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "高妻山周回",
+        "stays": 1,
+        "meters": 12602,
+        "seconds": 32280,
+        "up": 1506
+      }
+    ]
   },
   {
     "id": 440,
@@ -914,7 +1513,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.225833333333334/138.1075",
     "yamapId": 148,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "JAPAN TRAIL美ヶ原高原ロングトレイル（一の瀬 - 王ヶ頭）",
+        "stays": 1,
+        "meters": 13075,
+        "seconds": 26640,
+        "up": 1549
+      }
+    ]
   },
   {
     "id": 442,
@@ -931,7 +1539,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.10305555555556/138.19666666666666",
     "yamapId": 129,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "車山肩バス停発着｜霧ヶ峰（車山）中周回コース",
+        "stays": 1,
+        "meters": 6028,
+        "seconds": 9720,
+        "up": 379
+      }
+    ]
   },
   {
     "id": 443,
@@ -948,7 +1565,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.103611111111114/138.295",
     "yamapId": 149,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "JAPAN TRAIL八ヶ岳山麓スーパートレイル／蓼科山登山道",
+        "stays": 1,
+        "meters": 11510,
+        "seconds": 26340,
+        "up": 1372
+      }
+    ]
   },
   {
     "id": 450,
@@ -966,7 +1592,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.97083333333334/138.37",
     "yamapId": 101,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "赤岳（県界登山口）",
+        "stays": 1,
+        "meters": 10769,
+        "seconds": 30300,
+        "up": 1254
+      },
+      {
+        "name": "美濃戸口-北沢-行者小屋-地蔵ノ頭-赤岳-南沢 周回コース",
+        "stays": 2,
+        "meters": 17546,
+        "seconds": 37740,
+        "up": 1538
+      },
+      {
+        "name": "編笠山-権現岳-ツルネ-赤岳-地蔵ノ頭-美濃戸登山口-美濃 縦走コ…",
+        "stays": 3,
+        "meters": 16210,
+        "seconds": 49440,
+        "up": 1955
+      }
+    ]
   },
   {
     "id": 465,
@@ -984,7 +1633,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.75861111111111/137.75861111111112",
     "yamapId": 17,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "JAPAN TRAIL北アルプス縦走路③（朝日岳 - 白馬岳）",
+        "stays": 1,
+        "meters": 9703,
+        "seconds": 23460,
+        "up": 1304
+      },
+      {
+        "name": "白馬岳（猿倉）",
+        "stays": 2,
+        "meters": 12658,
+        "seconds": 40260,
+        "up": 1707
+      },
+      {
+        "name": "蓮華温泉バス停-蓮華温泉登山口-船越の頭-小蓮華山-白馬岳 周回コ…",
+        "stays": 3,
+        "meters": 32258,
+        "seconds": 79980,
+        "up": 3146
+      }
+    ]
   },
   {
     "id": 471,
@@ -1001,7 +1673,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.65833333333333/137.75277777777776",
     "yamapId": 173,
     "days": 2,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "地蔵の頭-小遠見山-中遠見山-大遠見山-西遠見山-白岳-五 縦走コ…",
+        "stays": 2,
+        "meters": 14131,
+        "seconds": 40200,
+        "up": 1636
+      },
+      {
+        "name": "柏原新道登山口-爺ヶ岳-布引山-鹿島槍ヶ岳-鹿島槍ヶ岳-口 縦走コ…",
+        "stays": 3,
+        "meters": 22691,
+        "seconds": 74940,
+        "up": 2903
+      }
+    ]
   },
   {
     "id": 472,
@@ -1019,7 +1707,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.62444444444444/137.74694444444444",
     "yamapId": 174,
     "days": 2,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "鹿島槍ヶ岳（大谷原）",
+        "stays": 1,
+        "meters": 17242,
+        "seconds": 47820,
+        "up": 2070
+      },
+      {
+        "name": "鹿島槍ヶ岳縦走",
+        "stays": 2,
+        "meters": 20624,
+        "seconds": 55920,
+        "up": 2406
+      },
+      {
+        "name": "柏原新道登山口-爺ヶ岳-布引山-鹿島槍ヶ岳-鹿島槍ヶ岳-口 縦走コ…",
+        "stays": 3,
+        "meters": 22691,
+        "seconds": 74940,
+        "up": 2903
+      }
+    ]
   },
   {
     "id": 488,
@@ -1036,7 +1747,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.42638888888889/137.60277777777776",
     "yamapId": 13,
     "days": 4,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "薬師岳登山口-アラスカ庭園-スイス庭園-祖父岳-岩苔乗越- 周回コ…",
+        "stays": 3,
+        "meters": 45588,
+        "seconds": 116520,
+        "up": 4033
+      },
+      {
+        "name": "北アルプス裏銀座登山口-前烏帽子岳-烏帽子岳-野口五郎岳- 縦走コ…",
+        "stays": 4,
+        "meters": 38258,
+        "seconds": 92700,
+        "up": 3515
+      }
+    ]
   },
   {
     "id": 490,
@@ -1054,7 +1781,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.403055555555554/137.6052777777778",
     "yamapId": 141,
     "days": 3,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "双六岳-丸山-三俣蓮華岳-鷲羽岳 周回コース",
+        "stays": 1,
+        "meters": 11409,
+        "seconds": 31560,
+        "up": 1233
+      },
+      {
+        "name": "鷲羽岳",
+        "stays": 3,
+        "meters": 36894,
+        "seconds": 81840,
+        "up": 3117
+      },
+      {
+        "name": "北アルプス裏銀座登山口-前烏帽子岳-烏帽子岳-野口五郎岳- 縦走コ…",
+        "stays": 4,
+        "meters": 38258,
+        "seconds": 92700,
+        "up": 3515
+      }
+    ]
   },
   {
     "id": 496,
@@ -1071,7 +1821,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.623333333333335/137.61694444444444",
     "yamapId": 11,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "前剱-剱岳-室堂登山口 縦走コース",
+        "stays": 1,
+        "meters": 10012,
+        "seconds": 36840,
+        "up": 1325
+      },
+      {
+        "name": "室堂-雷鳥沢-剱沢-前剱-剱岳 往復コース",
+        "stays": 2,
+        "meters": 14496,
+        "seconds": 49620,
+        "up": 1871
+      }
+    ]
   },
   {
     "id": 502,
@@ -1088,7 +1854,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.575833333333335/137.61972222222224",
     "yamapId": 12,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "室堂-一ノ越-立山（雄山）-別山-前剱-剱岳-雷鳥沢 周回コース",
+        "stays": 2,
+        "meters": 16773,
+        "seconds": 57420,
+        "up": 2208
+      }
+    ]
   },
   {
     "id": 510,
@@ -1105,7 +1880,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.46888888888889/137.54472222222222",
     "yamapId": 52,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "薬師岳往復",
+        "stays": 1,
+        "meters": 20097,
+        "seconds": 47400,
+        "up": 1846
+      },
+      {
+        "name": "薬師岳登山口-五光岩ベンチ-太郎山-薬師峠-薬師平-薬師岳 往復コ…",
+        "stays": 2,
+        "meters": 20888,
+        "seconds": 48720,
+        "up": 1894
+      },
+      {
+        "name": "薬師岳登山口-五光岩ベンチ-太郎山-薬師峠 往復コース",
+        "stays": 3,
+        "meters": 37084,
+        "seconds": 87240,
+        "up": 3166
+      }
+    ]
   },
   {
     "id": 512,
@@ -1123,7 +1921,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.3925/137.54",
     "yamapId": 271,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "飛越新道コース",
+        "stays": 1,
+        "meters": 27730,
+        "seconds": 68100,
+        "up": 2447
+      },
+      {
+        "name": "薬師岳登山口-五光岩ベンチ-太郎山-北ノ俣岳-赤木岳-中俣 縦走コ…",
+        "stays": 4,
+        "meters": 36228,
+        "seconds": 84420,
+        "up": 2885
+      },
+      {
+        "name": "薬師岳登山口-五光岩ベンチ-太郎山-北ノ俣岳-赤木岳-中俣 縦走コ…",
+        "stays": 5,
+        "meters": 36669,
+        "seconds": 84540,
+        "up": 3158
+      }
+    ]
   },
   {
     "id": 517,
@@ -1140,7 +1961,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.315555555555555/137.55027777777778",
     "yamapId": 175,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "新穂高温泉〜笠新道〜笠ヶ岳 往復コース",
+        "stays": 1,
+        "meters": 20465,
+        "seconds": 57840,
+        "up": 2243
+      },
+      {
+        "name": "笠ヶ岳・双六岳・わさび平 登山道入口-笠新道登山口-笠ヶ岳 周回コ…",
+        "stays": 2,
+        "meters": 27855,
+        "seconds": 68280,
+        "up": 2593
+      },
+      {
+        "name": "新穂高温泉駅-笠ヶ岳・双六岳・わさび平 登山道入口-笠新道 周回コ…",
+        "stays": 3,
+        "meters": 27855,
+        "seconds": 69780,
+        "up": 2595
+      }
+    ]
   },
   {
     "id": 527,
@@ -1157,7 +2001,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.32555555555556/137.7275",
     "yamapId": 144,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "前常念岳-常念乗越 縦走コース",
+        "stays": 1,
+        "meters": 6333,
+        "seconds": 25260,
+        "up": 1539
+      },
+      {
+        "name": "三股登山口-蝶ヶ岳-蝶槍-常念岳-前常念岳 周回コース",
+        "stays": 2,
+        "meters": 17721,
+        "seconds": 60600,
+        "up": 2485
+      },
+      {
+        "name": "縦走燕→常念（中房温泉・一ノ沢）",
+        "stays": 3,
+        "meters": 24457,
+        "seconds": 72420,
+        "up": 2548
+      }
+    ]
   },
   {
     "id": 533,
@@ -1174,7 +2041,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.341944444444444/137.64749999999998",
     "yamapId": 142,
     "days": 3,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "JAPAN TRAIL北アルプス縦走路⑪（三俣蓮華岳 - 槍ヶ岳）",
+        "stays": 1,
+        "meters": 9652,
+        "seconds": 25140,
+        "up": 1239
+      },
+      {
+        "name": "新穂高温泉駅-柳谷-白出沢口-白出沢 周回コース",
+        "stays": 2,
+        "meters": 28780,
+        "seconds": 72120,
+        "up": 2644
+      },
+      {
+        "name": "槍ヶ岳（上高地）",
+        "stays": 3,
+        "meters": 38483,
+        "seconds": 66900,
+        "up": 2213
+      }
+    ]
   },
   {
     "id": 539,
@@ -1192,7 +2082,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.28916666666667/137.64805555555554",
     "yamapId": 143,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "西穂丸山-西穂高岳-ジャンダルム 縦走コース",
+        "stays": 1,
+        "meters": 4743,
+        "seconds": 33000,
+        "up": 1233
+      },
+      {
+        "name": "上高地バス停-河童橋-岳沢湿原-雷鳥広場-紀美子平-前穂高 縦走コ…",
+        "stays": 2,
+        "meters": 15110,
+        "seconds": 62160,
+        "up": 2248
+      },
+      {
+        "name": "西穂高口駅-西穂丸山-西穂高岳-奥穂高岳-荷継小屋跡-白出 縦走コ…",
+        "stays": 3,
+        "meters": 15638,
+        "seconds": 59820,
+        "up": 1595
+      }
+    ]
   },
   {
     "id": 542,
@@ -1210,7 +2123,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.22694444444445/137.58694444444444",
     "yamapId": 145,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "新中の湯ルート",
+        "stays": 1,
+        "meters": 6543,
+        "seconds": 20640,
+        "up": 867
+      }
+    ]
   },
   {
     "id": 549,
@@ -1227,7 +2149,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.89277777777778/137.4802777777778",
     "yamapId": 147,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "中の湯登山口-御嶽山 周回コース",
+        "stays": 1,
+        "meters": 11171,
+        "seconds": 31140,
+        "up": 1375
+      }
+    ]
   },
   {
     "id": 565,
@@ -1244,7 +2175,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.71888888888889/137.81722222222223",
     "yamapId": 180,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "空木岳往復",
+        "stays": 1,
+        "meters": 17189,
+        "seconds": 47760,
+        "up": 2065
+      },
+      {
+        "name": "千畳敷〜空木岳〜池山尾根 縦走コース",
+        "stays": 2,
+        "meters": 17719,
+        "seconds": 53280,
+        "up": 1254
+      }
+    ]
   },
   {
     "id": 574,
@@ -1262,7 +2209,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.44361111111111/137.59722222222223",
     "yamapId": 181,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "恵那山 広河原ルート",
+        "stays": 1,
+        "meters": 11053,
+        "seconds": 27060,
+        "up": 1144
+      }
+    ]
   },
   {
     "id": 578,
@@ -1280,7 +2236,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.75805555555556/138.23666666666665",
     "yamapId": 62,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "黒戸尾根コース",
+        "stays": 1,
+        "meters": 17382,
+        "seconds": 56640,
+        "up": 2591
+      }
+    ]
   },
   {
     "id": 585,
@@ -1297,7 +2262,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.70166666666667/138.30472222222224",
     "yamapId": 63,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "鳳凰三山周回",
+        "stays": 1,
+        "meters": 15217,
+        "seconds": 48360,
+        "up": 2045
+      },
+      {
+        "name": "広河原登山口-白鳳峠入口-白鳳峠-高嶺-赤抜沢ノ頭-観音岳 縦走コ…",
+        "stays": 2,
+        "meters": 16466,
+        "seconds": 47760,
+        "up": 1984
+      }
+    ]
   },
   {
     "id": 589,
@@ -1315,7 +2296,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.72/138.1836111111111",
     "yamapId": 15,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "柏木登山口-仙丈ヶ岳 往復コース",
+        "stays": 1,
+        "meters": 25375,
+        "seconds": 56700,
+        "up": 2482
+      }
+    ]
   },
   {
     "id": 592,
@@ -1332,7 +2322,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.67444444444444/138.23888888888888",
     "yamapId": 138,
     "days": 2,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "広河原登山口-北岳 往復コース",
+        "stays": 1,
+        "meters": 10520,
+        "seconds": 43200,
+        "up": 1799
+      },
+      {
+        "name": "北岳",
+        "stays": 2,
+        "meters": 10326,
+        "seconds": 42000,
+        "up": 1771
+      },
+      {
+        "name": "広河原-広河原登山口-北岳-中白根山-間ノ岳-農鳥岳-農鳥 縦走コ…",
+        "stays": 3,
+        "meters": 25886,
+        "seconds": 78420,
+        "up": 2863
+      }
+    ]
   },
   {
     "id": 593,
@@ -1350,7 +2363,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.64611111111111/138.22833333333332",
     "yamapId": 139,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "中白根山-間ノ岳-農鳥岳-農鳥岳-大門沢登山道入口-奈良田 縦走コ…",
+        "stays": 1,
+        "meters": 24447,
+        "seconds": 75180,
+        "up": 3427
+      },
+      {
+        "name": "広河原登山口-北岳-中白根山-間ノ岳 周回コース",
+        "stays": 2,
+        "meters": 17273,
+        "seconds": 64020,
+        "up": 2407
+      },
+      {
+        "name": "広河原-広河原登山口-北岳-中白根山-間ノ岳-農鳥岳-農鳥 縦走コ…",
+        "stays": 3,
+        "meters": 25886,
+        "seconds": 78420,
+        "up": 2863
+      }
+    ]
   },
   {
     "id": 604,
@@ -1368,7 +2404,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.573056/138.183611",
     "yamapId": 182,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "塩見岳往復",
+        "stays": 1,
+        "meters": 24393,
+        "seconds": 53400,
+        "up": 2504
+      },
+      {
+        "name": "越路バス停-鳥倉登山口-三伏峠-三伏山-本谷山-塩見岳-塩 往復コ…",
+        "stays": 2,
+        "meters": 19063,
+        "seconds": 46800,
+        "up": 2132
+      }
+    ]
   },
   {
     "id": 614,
@@ -1385,7 +2437,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.50083333333333/138.1825",
     "yamapId": 183,
     "days": 2,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "赤石岳・聖岳登山口-笊ヶ岳登山口-駒鳥池 往復コース",
+        "stays": 2,
+        "meters": 23040,
+        "seconds": 53340,
+        "up": 2423
+      },
+      {
+        "name": "赤石岳・聖岳登山口-笊ヶ岳登山口-駒鳥池-千枚岳-丸山-悪 周回コ…",
+        "stays": 3,
+        "meters": 26471,
+        "seconds": 73620,
+        "up": 3193
+      }
+    ]
   },
   {
     "id": 617,
@@ -1403,7 +2471,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.461111111111116/138.15722222222223",
     "yamapId": 184,
     "days": 3,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "赤石岳（椹島）",
+        "stays": 2,
+        "meters": 16311,
+        "seconds": 49740,
+        "up": 2390
+      },
+      {
+        "name": "赤石岳・聖岳登山口-笊ヶ岳登山口-駒鳥池-千枚岳-丸山-悪 周回コ…",
+        "stays": 3,
+        "meters": 26471,
+        "seconds": 73620,
+        "up": 3193
+      },
+      {
+        "name": "赤石岳・聖岳登山口-富士見平-赤石岳-百間平-中盛丸山-小 周回コ…",
+        "stays": 4,
+        "meters": 29826,
+        "seconds": 81120,
+        "up": 3753
+      }
+    ]
   },
   {
     "id": 623,
@@ -1421,7 +2512,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.422777777777775/138.13972222222222",
     "yamapId": 185,
     "days": 4,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "芝沢ゲート-易老渡-大木の広場-苔平-小聖岳-聖岳 往復コース",
+        "stays": 1,
+        "meters": 26475,
+        "seconds": 57300,
+        "up": 3038
+      },
+      {
+        "name": "聖岳往復",
+        "stays": 2,
+        "meters": 27876,
+        "seconds": 60600,
+        "up": 3167
+      },
+      {
+        "name": "赤石岳・聖岳登山口-富士見平-赤石岳-百間平-中盛丸山-小 周回コ…",
+        "stays": 4,
+        "meters": 29826,
+        "seconds": 81120,
+        "up": 3753
+      }
+    ]
   },
   {
     "id": 627,
@@ -1439,7 +2553,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.338055555555556/138.0838888888889",
     "yamapId": 186,
     "days": 3,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "芝沢ゲート-易老渡-易老岳-三吉平-イザルガ岳-光岳 往復コース",
+        "stays": 1,
+        "meters": 25889,
+        "seconds": 58440,
+        "up": 2721
+      },
+      {
+        "name": "芝沢ゲート〜光岳 往復コース",
+        "stays": 2,
+        "meters": 25889,
+        "seconds": 58440,
+        "up": 2721
+      },
+      {
+        "name": "茶臼岳登山口-ヤレヤレ峠-茶臼岳-仁田池-希望峰-易老岳- 往復コ…",
+        "stays": 3,
+        "meters": 34585,
+        "seconds": 79440,
+        "up": 3591
+      }
+    ]
   },
   {
     "id": 683,
@@ -1457,7 +2594,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.155/136.7713888888889",
     "yamapId": 99,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "砂防新道コース",
+        "stays": 1,
+        "meters": 12319,
+        "seconds": 33660,
+        "up": 1524
+      },
+      {
+        "name": "別当出合登山口-白山奥宮祈祷殿・参籠殿-白山 周回コース",
+        "stays": 2,
+        "meters": 13932,
+        "seconds": 36840,
+        "up": 1566
+      }
+    ]
   },
   {
     "id": 698,
@@ -1474,7 +2627,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.93416666666666/136.6013888888889",
     "yamapId": 61,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "勝原コース",
+        "stays": 1,
+        "meters": 8717,
+        "seconds": 24660,
+        "up": 1267
+      }
+    ]
   },
   {
     "id": 707,
@@ -1491,7 +2653,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.41777777777777/136.4063888888889",
     "yamapId": 98,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "伊吹山 正面登山道（上野口コース）",
+        "stays": 1,
+        "meters": 10373,
+        "seconds": 24720,
+        "up": 1188
+      }
+    ]
   },
   {
     "id": 753,
@@ -1509,7 +2680,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/34.18527777777778/136.10916666666665",
     "yamapId": 64,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "東大台コース",
+        "stays": 1,
+        "meters": 7251,
+        "seconds": 13260,
+        "up": 477
+      },
+      {
+        "name": "大杉峡谷登山口-休憩所-堂倉滝吊橋-大台ヶ原山-大台ヶ原バ 往復コ…",
+        "stays": 2,
+        "meters": 29539,
+        "seconds": 81540,
+        "up": 2616
+      }
+    ]
   },
   {
     "id": 757,
@@ -1526,7 +2713,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/34.17361111111111/135.9075",
     "yamapId": 119,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "八経ヶ岳",
+        "stays": 1,
+        "meters": 9456,
+        "seconds": 25980,
+        "up": 1125
+      }
+    ]
   },
   {
     "id": 832,
@@ -1543,7 +2739,8 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.37111111111111/133.54611111111112",
     "yamapId": 87,
     "days": null,
-    "transit": null
+    "transit": null,
+    "routes": []
   },
   {
     "id": 906,
@@ -1560,7 +2757,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/33.853611111111114/134.09416666666667",
     "yamapId": 94,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "剣山王道コース",
+        "stays": 1,
+        "meters": 7575,
+        "seconds": 17340,
+        "up": 826
+      }
+    ]
   },
   {
     "id": 929,
@@ -1577,7 +2783,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/33.76777777777777/133.11499999999998",
     "yamapId": 124,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "成就社ルート",
+        "stays": 1,
+        "meters": 8493,
+        "seconds": 20820,
+        "up": 1005
+      }
+    ]
   },
   {
     "id": 967,
@@ -1594,7 +2809,23 @@
     "gsi": "https://maps.gsi.go.jp/#15/33.08583333333333/131.24888888888887",
     "yamapId": 187,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "赤川登山口-久住山 往復コース",
+        "stays": 1,
+        "meters": 4907,
+        "seconds": 15000,
+        "up": 764
+      },
+      {
+        "name": "牧ノ戸峠-沓掛山-久住山-御池-中岳-坊がつる炊事場-大戸 縦走コ…",
+        "stays": 2,
+        "meters": 12939,
+        "seconds": 25680,
+        "up": 730
+      }
+    ]
   },
   {
     "id": 973,
@@ -1611,7 +2842,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/32.88444444444444/131.1038888888889",
     "yamapId": 50,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "仙酔峡ルート周回",
+        "stays": 1,
+        "meters": 5753,
+        "seconds": 15600,
+        "up": 741
+      }
+    ]
   },
   {
     "id": 1004,
@@ -1629,7 +2869,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/32.82805555555556/131.34694444444446",
     "yamapId": 5,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "北谷登山口-風穴-祖母山 往復コース",
+        "stays": 1,
+        "meters": 5571,
+        "seconds": 16500,
+        "up": 710
+      }
+    ]
   },
   {
     "id": 1020,
@@ -1647,7 +2896,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/31.934166666666666/130.86166666666665",
     "yamapId": 188,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "韓国岳",
+        "stays": 1,
+        "meters": 4802,
+        "seconds": 11700,
+        "up": 536
+      }
+    ]
   },
   {
     "id": 1033,
@@ -1664,7 +2922,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/31.18/130.52833333333334",
     "yamapId": 189,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "開聞岳",
+        "stays": 1,
+        "meters": 7669,
+        "seconds": 19200,
+        "up": 831
+      }
+    ]
   },
   {
     "id": 1041,
@@ -1681,7 +2948,30 @@
     "gsi": "https://maps.gsi.go.jp/#15/30.33611111111111/130.50416666666666",
     "yamapId": 104,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "淀川入口-宮之浦岳 縦走コース",
+        "stays": 1,
+        "meters": 9817,
+        "seconds": 28800,
+        "up": 969
+      },
+      {
+        "name": "淀川登山口-花之江河-宮之浦岳-縄文杉-夫婦杉-大王杉-ウ 縦走コ…",
+        "stays": 2,
+        "meters": 21384,
+        "seconds": 58680,
+        "up": 1608
+      },
+      {
+        "name": "淀川登山口-花之江河-黒味岳-宮之浦岳-永田岳-縄文杉-大 縦走コ…",
+        "stays": 3,
+        "meters": 25061,
+        "seconds": 70680,
+        "up": 2044
+      }
+    ]
   },
   {
     "id": 10020,
@@ -1698,7 +2988,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.76515/139.4908",
     "yamapId": 20,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "瀧尾神社-奥宮-男体山-登拝門-二荒山神社中宮 縦走コース",
+        "stays": 1,
+        "meters": 6923,
+        "seconds": 21540,
+        "up": 948
+      }
+    ]
   },
   {
     "id": 10100,
@@ -1715,7 +3014,16 @@
     "gsi": "https://maps.gsi.go.jp/#15/35.78946/137.80468",
     "yamapId": 100,
     "days": 1,
-    "transit": false
+    "transit": false,
+    "routes": [
+      {
+        "name": "木曽駒ヶ岳-駒ヶ岳ロープウェイ 千畳敷駅 縦走コース",
+        "stays": 1,
+        "meters": 2812,
+        "seconds": 8880,
+        "up": 216
+      }
+    ]
   },
   {
     "id": 10146,
@@ -1733,6 +3041,22 @@
     "gsi": "https://maps.gsi.go.jp/#15/36.10645/137.55361",
     "yamapId": 146,
     "days": 1,
-    "transit": true
+    "transit": true,
+    "routes": [
+      {
+        "name": "三本滝バス停-乗鞍岳-乗鞍山頂バス停 縦走コース",
+        "stays": 1,
+        "meters": 10540,
+        "seconds": 25260,
+        "up": 1414
+      },
+      {
+        "name": "丸黒山 登山口-日影峠-日影平山-平金乗越-丸黒山-乗鞍岳 往復コ…",
+        "stays": 2,
+        "meters": 30012,
+        "seconds": 55800,
+        "up": 2377
+      }
+    ]
   }
 ]
