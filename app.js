@@ -38,7 +38,7 @@ const state = {
   selectedId: null,
   focusZoom: null,
   tab: "record",
-  mapFocus: window.innerWidth < 980,
+  mobilePane: "map",
 };
 
 let map;
@@ -91,10 +91,14 @@ function mapPadding() {
   if (!isNarrow()) {
     return { paddingTopLeft: [430, 28], paddingBottomRight: [40, 28] };
   }
-  if (state.mapFocus) {
-    return { paddingTopLeft: [16, 72], paddingBottomRight: [16, 16] };
+  const header = 72;
+  if (state.mobilePane === "list") {
+    return { paddingTopLeft: [16, header], paddingBottomRight: [16, Math.round(window.innerHeight * 0.62) + 16] };
   }
-  return { paddingTopLeft: [16, 88], paddingBottomRight: [16, layout.resultsH + 16] };
+  if (state.mobilePane === "detail") {
+    return { paddingTopLeft: [16, header], paddingBottomRight: [16, Math.round(window.innerHeight * 0.7) + 16] };
+  }
+  return { paddingTopLeft: [16, header], paddingBottomRight: [16, 16] };
 }
 
 function fitJapan() {
@@ -535,7 +539,9 @@ function renderHeader() {
       if (state.tab === id) return;
       state.tab = id;
       state.selectedId = null;
+      if (isNarrow()) state.mobilePane = "list";
       render();
+      requestAnimationFrame(refreshMap);
     });
     tabs.append(button);
   });
@@ -543,48 +549,59 @@ function renderHeader() {
     const mapToggle = document.createElement("button");
     mapToggle.type = "button";
     mapToggle.className = "map-toggle";
-    mapToggle.textContent = state.mapFocus ? "一覧" : "地図";
+    mapToggle.textContent = state.mobilePane === "map" ? "一覧" : "地図";
     mapToggle.addEventListener("click", () => {
-      state.mapFocus = !state.mapFocus;
+      state.mobilePane = state.mobilePane === "map" ? "list" : "map";
       render();
-      requestAnimationFrame(() => {
-        if (!map) return;
-        map.invalidateSize();
-        if (!state.selectedId) fitJapan();
-      });
+      requestAnimationFrame(refreshMap);
     });
     row.append(h1, tabs, mapToggle);
   } else {
     row.append(h1, tabs);
   }
-  const lede = document.createElement("p");
-  lede.textContent = "登った山の記録と、次に登る山の検索です。";
-  header.append(row, lede);
-  if (state.tab === "record") {
-    const count = document.createElement("p");
-    count.className = "count";
-    const strong = document.createElement("strong");
-    const climbed = state.mountains.filter((mountain) => isClimbed(mountain.id)).length;
-    strong.textContent = String(climbed);
-    const span = document.createElement("span");
-    span.textContent = "/100";
-    count.append(strong, span);
-    const bar = document.createElement("div");
-    bar.className = "bar";
-    const fill = document.createElement("i");
-    fill.style.width = `${climbed}%`;
-    bar.append(fill);
-    header.append(count, bar);
+  header.append(row);
+  if (!isNarrow()) {
+    const lede = document.createElement("p");
+    lede.textContent = "登った山の記録と、次に登る山の検索です。";
+    header.append(lede);
+    if (state.tab === "record") header.append(renderCount());
   }
   return header;
 }
 
+function renderCount() {
+  const wrap = document.createElement("div");
+  wrap.className = "count-block";
+  const count = document.createElement("p");
+  count.className = "count";
+  const strong = document.createElement("strong");
+  const climbed = state.mountains.filter((mountain) => isClimbed(mountain.id)).length;
+  strong.textContent = String(climbed);
+  const span = document.createElement("span");
+  span.textContent = "/100";
+  count.append(strong, span);
+  const bar = document.createElement("div");
+  bar.className = "bar";
+  const fill = document.createElement("i");
+  fill.style.width = `${climbed}%`;
+  bar.append(fill);
+  wrap.append(count, bar);
+  return wrap;
+}
+
 function renderSidebar() {
   const aside = document.getElementById("sidebar");
-  const query = state.filters.query;
   aside.replaceChildren();
   const header = renderHeader();
+  if (isNarrow()) {
+    aside.append(header);
+    return;
+  }
+  aside.append(header, buildFilters());
+}
 
+function buildFilters() {
+  const query = state.filters.query;
   const search = document.createElement("label");
   search.className = "search";
   const input = document.createElement("input");
@@ -707,7 +724,7 @@ function renderSidebar() {
   } else {
     filtersBox.append(search, regions, status);
   }
-  aside.append(header, filtersBox);
+  return filtersBox;
 }
 
 function accessLabel(mountain) {
@@ -722,11 +739,19 @@ function accessShort(mountain) {
 
 function renderResults() {
   const pane = document.getElementById("results");
+  if (isNarrow() && state.mobilePane !== "list") {
+    pane.hidden = true;
+    return;
+  }
   const searching = state.tab === "search";
   const result = searching ? searchDisplay() : { mountains: displayedMountains(), note: recordNote() };
   pane.hidden = false;
   const body = document.getElementById("results-body") || pane;
   body.replaceChildren();
+  if (isNarrow()) {
+    if (state.tab === "record") body.append(renderCount());
+    body.append(buildFilters());
+  }
   const head = document.createElement("div");
   head.className = "results-head";
   const title = document.createElement("strong");
@@ -752,8 +777,12 @@ function renderResults() {
   const foot = document.createElement("p");
   foot.className = "foot";
   foot.textContent = searching
-    ? "山を選ぶと、右側に行程の詳細が出ます。時間・距離・上りは YAMAP のモデルコースの数値です。"
-    : "山を選ぶと、右側に記録の入力が出ます。登頂日とメモは、このブラウザの中だけに残ります。";
+    ? isNarrow()
+      ? "山を選ぶと行程の詳細が出ます。時間・距離・上りは YAMAP のモデルコースの数値です。"
+      : "山を選ぶと、右側に行程の詳細が出ます。時間・距離・上りは YAMAP のモデルコースの数値です。"
+    : isNarrow()
+      ? "山を選ぶと記録の入力が出ます。登頂日とメモは、このブラウザの中だけに残ります。"
+      : "山を選ぶと、右側に記録の入力が出ます。登頂日とメモは、このブラウザの中だけに残ります。";
   body.append(head, sheet, foot);
 }
 
@@ -811,7 +840,7 @@ function renderDetail() {
   const pane = document.getElementById("detail");
   const body = document.getElementById("detail-body") || pane;
   const mountain = state.mountains.find((item) => item.id === state.selectedId);
-  if (!mountain) {
+  if (!mountain || (isNarrow() && state.mobilePane !== "detail")) {
     pane.hidden = true;
     body.replaceChildren();
     return;
@@ -820,6 +849,18 @@ function renderDetail() {
   const current = recordOf(mountain.id);
   const { title, sub } = titleOf(mountain.name);
   body.replaceChildren();
+  if (isNarrow()) {
+    const back = document.createElement("button");
+    back.type = "button";
+    back.className = "detail-back";
+    back.textContent = "一覧に戻る";
+    back.addEventListener("click", () => {
+      state.mobilePane = "list";
+      render();
+      requestAnimationFrame(refreshMap);
+    });
+    body.append(back);
+  }
   const area = document.createElement("p");
   area.className = "area";
   area.textContent = mountain.area;
@@ -1025,7 +1066,9 @@ function render() {
   if (state.selectedId != null && !visible.has(state.selectedId)) state.selectedId = null;
   document.body.classList.toggle("is-search", state.tab === "search");
   document.body.classList.toggle("is-narrow", isNarrow());
-  document.body.classList.toggle("is-map-focus", Boolean(state.mapFocus && isNarrow()));
+  document.body.classList.toggle("is-mobile-map", isNarrow() && state.mobilePane === "map");
+  document.body.classList.toggle("is-mobile-list", isNarrow() && state.mobilePane === "list");
+  document.body.classList.toggle("is-mobile-detail", isNarrow() && state.mobilePane === "detail");
   renderSidebar();
   renderResults();
   renderDetail();
@@ -1035,6 +1078,7 @@ function render() {
 function select(id, zoom) {
   state.selectedId = id;
   state.focusZoom = zoom;
+  if (isNarrow()) state.mobilePane = "detail";
   render();
   const mountain = state.mountains.find((item) => item.id === id);
   if (!map || !mountain) return;
