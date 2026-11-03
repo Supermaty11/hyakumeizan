@@ -1,13 +1,13 @@
-const SHELL_CACHE = "hyakumeizan-shell-v13";
+const SHELL_CACHE = "hyakumeizan-shell-v14";
 const TILE_CACHE = "hyakumeizan-tiles-v1";
 const TILE_MAX = 400;
 const SHELL = [
   "./",
   "./index.html",
   "./styles.css",
-  "./styles.css?v=13",
+  "./styles.css?v=14",
   "./app.js",
-  "./app.js?v=13",
+  "./app.js?v=14",
   "./data/mountains.json",
   "./vendor/leaflet.css",
   "./vendor/leaflet.js",

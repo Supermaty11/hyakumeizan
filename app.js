@@ -93,7 +93,7 @@ function mapPadding() {
   }
   const header = 72;
   if (state.mobilePane === "list" || state.mobilePane === "detail") {
-    return { paddingTopLeft: [16, header], paddingBottomRight: [16, Math.round(window.innerHeight * 0.4) + 16] };
+    return { paddingTopLeft: [16, header], paddingBottomRight: [16, Math.round(window.innerHeight * 0.67) + 16] };
   }
   return { paddingTopLeft: [16, header], paddingBottomRight: [16, 16] };
 }

@@ -398,8 +398,8 @@ dd { margin: 2px 0 0; }
   }
   #results,
   #detail {
-    height: 40svh;
-    max-height: calc(100svh - 236px);
+    height: 66.67svh;
+    max-height: calc(100svh - 88px);
   }
   #detail dl { grid-template-columns: 1fr 1fr; }
   .resize-bar,
@@ -410,7 +410,7 @@ dd { margin: 2px 0 0; }
     font-size: 16px;
   }
   #results .filters {
-    max-height: 28%;
+    max-height: 42%;
     overflow: auto;
     flex: 0 1 auto;
     border-bottom: 1px solid #e1e4df;
