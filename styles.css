@@ -392,18 +392,16 @@ dd { margin: 2px 0 0; }
     width: auto;
     max-width: none;
   }
-  #results {
-    height: min(62vh, calc(100dvh - 88px));
-  }
+  #results,
   #detail {
-    height: min(70vh, calc(100dvh - 88px));
-    max-height: none;
+    height: 40svh;
+    max-height: calc(100svh - 236px);
   }
   #detail dl { grid-template-columns: 1fr 1fr; }
   .resize-bar,
   .resize-corner { display: none; }
   #results .filters {
-    max-height: 34%;
+    max-height: 28%;
     overflow: auto;
     flex: none;
     border-bottom: 1px solid #e1e4df;

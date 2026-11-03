@@ -92,11 +92,8 @@ function mapPadding() {
     return { paddingTopLeft: [430, 28], paddingBottomRight: [40, 28] };
   }
   const header = 72;
-  if (state.mobilePane === "list") {
-    return { paddingTopLeft: [16, header], paddingBottomRight: [16, Math.round(window.innerHeight * 0.62) + 16] };
-  }
-  if (state.mobilePane === "detail") {
-    return { paddingTopLeft: [16, header], paddingBottomRight: [16, Math.round(window.innerHeight * 0.7) + 16] };
+  if (state.mobilePane === "list" || state.mobilePane === "detail") {
+    return { paddingTopLeft: [16, header], paddingBottomRight: [16, Math.round(window.innerHeight * 0.4) + 16] };
   }
   return { paddingTopLeft: [16, header], paddingBottomRight: [16, 16] };
 }
