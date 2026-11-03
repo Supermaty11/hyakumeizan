@@ -10,10 +10,21 @@
 }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; }
+html, body {
+  margin: 0;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
 button, input, textarea { font: inherit; color: inherit; }
-#map { position: absolute; inset: 0; background: #f3f4f1; }
-.leaflet-container { font-family: inherit; background: #f3f4f1; }
+#map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #f3f4f1;
+}
+.leaflet-container { font-family: inherit; background: #f3f4f1; width: 100%; height: 100%; }
 
 aside, #detail, #results {
   position: absolute;
@@ -24,8 +35,8 @@ aside, #detail, #results {
   box-shadow: 0 10px 28px rgba(24, 28, 24, 0.12);
 }
 aside {
-  top: 12px;
-  left: 12px;
+  top: max(12px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
   bottom: auto;
   width: 390px;
   max-height: calc(100% - var(--results-h) - 28px);
@@ -47,6 +58,16 @@ h1 { margin: 0; font-size: 22px; font-weight: 650; }
   color: #3d4541;
 }
 .tabs button.is-on { background: #fff; color: #1b1e1c; font-weight: 650; }
+.map-toggle {
+  border: 0;
+  background: #1f3d32;
+  color: #f4f6f3;
+  border-radius: 8px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  flex: none;
+}
 header p { margin: 4px 0 0; color: #5c6460; font-size: 12px; }
 .count { margin-top: 10px; }
 .count strong { font-size: 28px; font-weight: 650; }
@@ -346,6 +367,41 @@ dd { margin: 2px 0 0; }
 .leaflet-control-attribution { background: rgba(247, 248, 246, 0.9) !important; font-size: 10px !important; }
 
 @media (max-width: 980px) {
-  aside { width: min(360px, calc(100% - 24px)); max-height: calc(30vh); }
-  #detail { right: 12px; }
+  aside {
+    width: calc(100% - 24px);
+    max-height: min(38vh, 280px);
+  }
+  #results {
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+  #detail {
+    right: 12px;
+    max-width: calc(100% - 24px);
+  }
+  body.is-map-focus aside {
+    max-height: none;
+    width: calc(100% - 24px);
+  }
+  body.is-map-focus aside header p,
+  body.is-map-focus aside .count,
+  body.is-map-focus aside .bar,
+  body.is-map-focus .filters,
+  body.is-map-focus aside .foot {
+    display: none;
+  }
+  body.is-map-focus #results {
+    display: none;
+  }
+  body.is-map-focus #detail {
+    top: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    right: 12px;
+    left: 12px;
+    width: auto;
+    height: min(var(--detail-h), 42vh);
+    max-width: none;
+    max-height: 46vh;
+  }
 }

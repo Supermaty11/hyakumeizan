@@ -38,6 +38,7 @@ const state = {
   selectedId: null,
   focusZoom: null,
   tab: "record",
+  mapFocus: window.innerWidth < 980,
 };
 
 let map;
@@ -47,16 +48,24 @@ let mapMode = "photo";
 let pins;
 const layout = loadLayout();
 
+function isNarrow() {
+  return window.innerWidth < 980;
+}
+
+function defaultResultsH() {
+  return isNarrow() ? 148 : 252;
+}
+
 function loadLayout() {
   try {
     const saved = JSON.parse(localStorage.getItem(LAYOUT_KEY) || "{}");
     return {
-      resultsH: Number(saved.resultsH) || 252,
+      resultsH: Number(saved.resultsH) || defaultResultsH(),
       detailW: Number(saved.detailW) || 320,
       detailH: Number(saved.detailH) || 0,
     };
   } catch {
-    return { resultsH: 252, detailW: 320, detailH: 0 };
+    return { resultsH: defaultResultsH(), detailW: 320, detailH: 0 };
   }
 }
 
@@ -67,14 +76,41 @@ function clamp(value, min, max) {
 function layoutLimits() {
   const height = window.innerHeight;
   const width = window.innerWidth;
+  const narrow = isNarrow();
   return {
-    resultsMin: 140,
-    resultsMax: Math.max(160, Math.round(height * 0.55)),
+    resultsMin: narrow ? 88 : 140,
+    resultsMax: Math.max(narrow ? 100 : 160, Math.round(height * (narrow ? 0.4 : 0.55))),
     detailWMin: 260,
     detailWMax: Math.max(280, width - 80),
     detailHMin: 200,
     detailHMax: Math.max(220, height - layout.resultsH - 36),
   };
+}
+
+function mapPadding() {
+  if (!isNarrow()) {
+    return { paddingTopLeft: [430, 28], paddingBottomRight: [40, 28] };
+  }
+  if (state.mapFocus) {
+    return { paddingTopLeft: [16, 72], paddingBottomRight: [16, 16] };
+  }
+  return { paddingTopLeft: [16, 88], paddingBottomRight: [16, layout.resultsH + 16] };
+}
+
+function fitJapan() {
+  if (!map) return;
+  map.invalidateSize();
+  map.fitBounds(
+    [
+      [30.2, 129.2],
+      [45.5, 145.5],
+    ],
+    mapPadding(),
+  );
+}
+
+function refreshMap() {
+  if (map) map.invalidateSize();
 }
 
 function applyLayout() {
@@ -503,7 +539,24 @@ function renderHeader() {
     });
     tabs.append(button);
   });
-  row.append(h1, tabs);
+  if (isNarrow()) {
+    const mapToggle = document.createElement("button");
+    mapToggle.type = "button";
+    mapToggle.className = "map-toggle";
+    mapToggle.textContent = state.mapFocus ? "一覧" : "地図";
+    mapToggle.addEventListener("click", () => {
+      state.mapFocus = !state.mapFocus;
+      render();
+      requestAnimationFrame(() => {
+        if (!map) return;
+        map.invalidateSize();
+        if (!state.selectedId) fitJapan();
+      });
+    });
+    row.append(h1, tabs, mapToggle);
+  } else {
+    row.append(h1, tabs);
+  }
   const lede = document.createElement("p");
   lede.textContent = "登った山の記録と、次に登る山の検索です。";
   header.append(row, lede);
@@ -971,6 +1024,8 @@ function render() {
   const visible = new Set(displayedMountains().map((mountain) => mountain.id));
   if (state.selectedId != null && !visible.has(state.selectedId)) state.selectedId = null;
   document.body.classList.toggle("is-search", state.tab === "search");
+  document.body.classList.toggle("is-narrow", isNarrow());
+  document.body.classList.toggle("is-map-focus", Boolean(state.mapFocus && isNarrow()));
   renderSidebar();
   renderResults();
   renderDetail();
@@ -995,13 +1050,13 @@ function setupMap() {
   paleLayer = L.tileLayer(PALE, { attribution, maxZoom: 18, minZoom: 5 });
   photoLayer.addTo(map);
   pins = L.layerGroup().addTo(map);
-  map.fitBounds(
-    [
-      [30.2, 129.2],
-      [45.5, 145.5],
-    ],
-    { paddingTopLeft: [430, 28], paddingBottomRight: [40, 28] },
-  );
+  fitJapan();
+  requestAnimationFrame(() => {
+    refreshMap();
+    if (!state.selectedId) fitJapan();
+  });
+  window.addEventListener("resize", refreshMap);
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", refreshMap);
   map.on("zoomend", () => {
     const next = map.getZoom() >= 12 ? "pale" : "photo";
     if (next === mapMode) return;
@@ -1018,7 +1073,13 @@ function setupMap() {
   });
 }
 
+function registerOffline() {
+  if (!("serviceWorker" in navigator)) return;
+  navigator.serviceWorker.register(new URL("sw.js", document.baseURI)).catch(() => {});
+}
+
 setupLayout();
+registerOffline();
 fetch("data/mountains.json")
   .then((response) => {
     if (!response.ok) throw new Error("data");
