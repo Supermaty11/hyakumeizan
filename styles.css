@@ -12,9 +12,13 @@
 * { box-sizing: border-box; }
 html, body {
   margin: 0;
+  position: fixed;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  height: 100dvh;
   overflow: hidden;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
 }
 button, input, textarea { font: inherit; color: inherit; }
 #map {
@@ -112,7 +116,7 @@ body.is-search .filters { max-height: none; }
   overflow: hidden;
 }
 #results-body { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
-#results-body .sheet { flex: 1; }
+#results-body .sheet { flex: 1 1 0; min-height: 0; }
 #results[hidden] { display: none; }
 .results-head {
   display: flex;
@@ -400,14 +404,27 @@ dd { margin: 2px 0 0; }
   #detail dl { grid-template-columns: 1fr 1fr; }
   .resize-bar,
   .resize-corner { display: none; }
+  .search input,
+  .record input,
+  .record textarea {
+    font-size: 16px;
+  }
   #results .filters {
     max-height: 28%;
     overflow: auto;
-    flex: none;
+    flex: 0 1 auto;
     border-bottom: 1px solid #e1e4df;
   }
-  #results .count-block {
-    padding: 8px 12px 0;
-    flex: none;
+  #results .filters fieldset { margin: 6px 12px 0; }
+  #results .field-note,
+  #results .foot,
+  #results .count-block { display: none; }
+  .results-head { padding: 8px 12px 0; flex: none; }
+  #results-body .sheet {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 }

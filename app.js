@@ -1097,7 +1097,6 @@ function setupMap() {
     if (!state.selectedId) fitJapan();
   });
   window.addEventListener("resize", refreshMap);
-  if (window.visualViewport) window.visualViewport.addEventListener("resize", refreshMap);
   map.on("zoomend", () => {
     const next = map.getZoom() >= 12 ? "pale" : "photo";
     if (next === mapMode) return;
