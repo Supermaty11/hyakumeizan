@@ -93,7 +93,7 @@ function mapPadding() {
   }
   const header = 72;
   if (state.mobilePane === "list" || state.mobilePane === "detail") {
-    return { paddingTopLeft: [16, header], paddingBottomRight: [16, Math.round(window.innerHeight * 0.67) + 16] };
+    return { paddingTopLeft: [16, header], paddingBottomRight: [16, Math.round(viewHeight() * 0.4) + 16] };
   }
   return { paddingTopLeft: [16, header], paddingBottomRight: [16, 16] };
 }
@@ -114,6 +114,10 @@ function refreshMap() {
   if (map) map.invalidateSize();
 }
 
+function viewHeight() {
+  return Math.round(window.visualViewport?.height || window.innerHeight);
+}
+
 function applyLayout() {
   const limits = layoutLimits();
   layout.resultsH = clamp(layout.resultsH, limits.resultsMin, limits.resultsMax);
@@ -124,6 +128,9 @@ function applyLayout() {
   root.style.setProperty("--results-h", `${layout.resultsH}px`);
   root.style.setProperty("--detail-w", `${layout.detailW}px`);
   root.style.setProperty("--detail-h", `${layout.detailH}px`);
+  if (isNarrow()) {
+    root.style.setProperty("--mobile-sheet-h", `${Math.round(viewHeight() * 0.4)}px`);
+  }
   if (map) map.invalidateSize();
 }
 
@@ -164,6 +171,7 @@ function setupLayout() {
     layout.detailH = origin.detailH + (event.clientY - startY);
   });
   window.addEventListener("resize", applyLayout);
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", applyLayout);
 }
 
 function loadRecords() {
