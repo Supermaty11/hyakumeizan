@@ -120,7 +120,23 @@ function refreshMap() {
 }
 
 function viewHeight() {
-  return Math.round(window.visualViewport?.height || window.innerHeight);
+  return Math.round(window.innerHeight || window.visualViewport?.height);
+}
+
+function isField(el) {
+  return Boolean(el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.tagName === "SELECT"));
+}
+
+function pinPage() {
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
+function applyKeyboardOffset() {
+  const vv = window.visualViewport;
+  const offset = vv && isField(document.activeElement) ? Math.max(0, Math.round(vv.offsetTop || 0)) : 0;
+  document.documentElement.style.setProperty("--kb-offset", `${offset}px`);
 }
 
 function applyLayout() {
@@ -133,10 +149,10 @@ function applyLayout() {
   root.style.setProperty("--results-h", `${layout.resultsH}px`);
   root.style.setProperty("--detail-w", `${layout.detailW}px`);
   root.style.setProperty("--detail-h", `${layout.detailH}px`);
-  if (isNarrow()) {
+  if (isNarrow() && !isField(document.activeElement)) {
     root.style.setProperty("--mobile-sheet-h", `${Math.round(viewHeight() * 0.4)}px`);
   }
-  if (map) map.invalidateSize();
+  if (map && !isField(document.activeElement)) map.invalidateSize();
 }
 
 function saveLayout() {
@@ -175,8 +191,41 @@ function setupLayout() {
     layout.detailW = origin.detailW - (event.clientX - startX);
     layout.detailH = origin.detailH + (event.clientY - startY);
   });
-  window.addEventListener("resize", applyLayout);
-  if (window.visualViewport) window.visualViewport.addEventListener("resize", applyLayout);
+  const onViewport = () => {
+    pinPage();
+    applyKeyboardOffset();
+    if (!isField(document.activeElement)) applyLayout();
+  };
+  window.addEventListener("resize", onViewport);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", onViewport);
+    window.visualViewport.addEventListener("scroll", () => {
+      pinPage();
+      applyKeyboardOffset();
+    });
+  }
+  document.addEventListener("focusin", (event) => {
+    if (!isField(event.target)) return;
+    pinPage();
+    applyKeyboardOffset();
+    requestAnimationFrame(() => {
+      pinPage();
+      applyKeyboardOffset();
+      event.target.scrollIntoView({ block: "nearest", inline: "nearest" });
+    });
+  });
+  document.addEventListener("focusout", () => {
+    setTimeout(() => {
+      pinPage();
+      applyKeyboardOffset();
+      if (!isField(document.activeElement)) applyLayout();
+    }, 80);
+  });
+  window.addEventListener("pageshow", () => {
+    pinPage();
+    applyKeyboardOffset();
+    applyLayout();
+  });
 }
 
 function loadRecords() {
@@ -1015,7 +1064,17 @@ function splitLine() {
 
 function openRoute(mountain, mode) {
   const url = mapsRouteUrl(mountain, mode);
-  window.open(url, "_blank", "noopener,noreferrer");
+  if (isNarrow()) {
+    window.location.assign(url);
+    return;
+  }
+  const link = document.createElement("a");
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  document.body.append(link);
+  link.click();
+  link.remove();
 }
 
 function yamapUrl(mountain) {
