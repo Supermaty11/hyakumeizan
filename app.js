@@ -1066,7 +1066,43 @@ function drawPins() {
   });
 }
 
+const savedScroll = { aside: 0, filters: 0, sheet: 0, detail: 0 };
+
+function panelShown(el) {
+  const pane = el?.closest("#results, #detail, aside");
+  return Boolean(el && pane && !pane.hidden);
+}
+
+function captureScroll() {
+  const aside = document.getElementById("sidebar");
+  const filters = document.querySelector(".filters");
+  const sheet = document.querySelector(".sheet");
+  const detail = document.getElementById("detail-body");
+  if (panelShown(aside)) savedScroll.aside = aside.scrollTop;
+  if (panelShown(filters)) savedScroll.filters = filters.scrollTop;
+  if (panelShown(sheet)) savedScroll.sheet = sheet.scrollTop;
+  if (panelShown(detail)) savedScroll.detail = detail.scrollTop;
+}
+
+function restoreScroll() {
+  const aside = document.getElementById("sidebar");
+  const filters = document.querySelector(".filters");
+  const sheet = document.querySelector(".sheet");
+  const detail = document.getElementById("detail-body");
+  if (panelShown(aside)) aside.scrollTop = savedScroll.aside;
+  if (panelShown(filters)) filters.scrollTop = savedScroll.filters;
+  if (panelShown(sheet)) sheet.scrollTop = savedScroll.sheet;
+  if (panelShown(detail)) detail.scrollTop = savedScroll.detail;
+}
+
+function syncMapDrag() {
+  if (!map) return;
+  if (isNarrow() && state.mobilePane === "detail") map.dragging.disable();
+  else map.dragging.enable();
+}
+
 function render() {
+  captureScroll();
   const visible = new Set(displayedMountains().map((mountain) => mountain.id));
   if (state.selectedId != null && !visible.has(state.selectedId)) state.selectedId = null;
   document.body.classList.toggle("is-search", state.tab === "search");
@@ -1078,6 +1114,8 @@ function render() {
   renderResults();
   renderDetail();
   if (pins) drawPins();
+  restoreScroll();
+  syncMapDrag();
 }
 
 function select(id, zoom) {
@@ -1087,11 +1125,19 @@ function select(id, zoom) {
   render();
   const mountain = state.mountains.find((item) => item.id === id);
   if (!map || !mountain) return;
-  map.flyTo([mountain.lat, mountain.lng], Math.max(map.getZoom(), zoom), { duration: 0.7 });
+  const nextZoom = Math.max(map.getZoom(), zoom);
+  if (isNarrow()) map.setView([mountain.lat, mountain.lng], nextZoom, { animate: false });
+  else map.flyTo([mountain.lat, mountain.lng], nextZoom, { duration: 0.7 });
 }
 
 function setupMap() {
-  map = L.map("map", { zoomControl: false, minZoom: 5, maxZoom: 18 });
+  map = L.map("map", {
+    zoomControl: false,
+    minZoom: 5,
+    maxZoom: 18,
+    inertia: false,
+    bounceAtZoomLimits: false,
+  });
   L.control.zoom({ position: "bottomright" }).addTo(map);
   const attribution =
     "出典：<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank' rel='noopener'>国土地理院</a>";
