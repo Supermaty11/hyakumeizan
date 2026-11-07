@@ -474,6 +474,26 @@ dd { margin: 2px 0 0; }
   cursor: pointer;
 }
 .route-choices button.is-on { background: #1f3d32; border-color: #1f3d32; color: #f4f6f3; }
+.route-places { margin-top: 8px; }
+.route-place {
+  display: flex;
+  align-items: stretch;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid #d5d8d2;
+  background: #fff;
+}
+.route-place button {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.route-place button.is-on { background: #1f3d32; color: #f4f6f3; }
+.route-place-del {
+  padding: 6px 8px;
+  color: #5c6460;
+  cursor: pointer;
+}
 .route-split { margin: 8px 0 0; font-size: 13px; font-weight: 650; }
 .route-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 .route-actions button {

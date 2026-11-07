@@ -16,6 +16,8 @@ const ACCESS_OPTIONS = [
 const KEY = "hyakumeizan-records-v1";
 const LAYOUT_KEY = "hyakumeizan-layout-v1";
 const ROUTE_KEY = "hyakumeizan-route-v1";
+const PLACES_KEY = "hyakumeizan-places-v1";
+const PLACE_MAX = 12;
 const PHOTO_DB_NAME = "hyakumeizan-photos-v1";
 const PHOTO_STORE = "photos";
 const PHOTO_MAX = 5;
@@ -49,6 +51,7 @@ let mapMode = "photo";
 let pins;
 const layout = loadLayout();
 let routeForm = loadRouteForm();
+let places = loadPlaces();
 
 function isNarrow() {
   return window.innerWidth < 980;
@@ -524,6 +527,9 @@ function loadRouteForm() {
       tab: saved.tab === "driving" ? "driving" : "transit",
       people: saved.people === "" || saved.people == null ? "" : String(clamp(Math.round(Number(saved.people) || 1), 1, 99)),
       fare: String(saved.fare || ""),
+      selectedPlaceId: String(saved.selectedPlaceId || ""),
+      saving: Boolean(saved.saving),
+      placeName: String(saved.placeName || ""),
       open: saved.open !== false,
     };
   } catch {
@@ -540,6 +546,9 @@ function loadRouteForm() {
       tab: "transit",
       people: "",
       fare: "",
+      selectedPlaceId: "",
+      saving: false,
+      placeName: "",
       open: true,
     };
   }
@@ -547,6 +556,36 @@ function loadRouteForm() {
 
 function persistRoute() {
   localStorage.setItem(ROUTE_KEY, JSON.stringify(routeForm));
+}
+
+function loadPlaces() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(PLACES_KEY) || "[]");
+    if (!Array.isArray(saved)) return [];
+    return saved
+      .map((item) => ({
+        id: String(item.id || ""),
+        name: String(item.name || "").trim(),
+        address: String(item.address || "").trim(),
+      }))
+      .filter((item) => item.id && item.name && item.address)
+      .slice(0, PLACE_MAX);
+  } catch {
+    return [];
+  }
+}
+
+function persistPlaces() {
+  localStorage.setItem(PLACES_KEY, JSON.stringify(places));
+}
+
+function newPlaceId() {
+  return `p-${Date.now().toString(36)}`;
+}
+
+function matchPlace(address) {
+  const value = String(address || "").trim();
+  return places.find((place) => place.address === value) || null;
 }
 
 function pad2(value) {
@@ -650,9 +689,107 @@ function fillRouteSearch(mountain) {
   origin.autocomplete = "off";
   origin.addEventListener("input", () => {
     routeForm.origin = origin.value;
+    const matched = matchPlace(origin.value);
+    routeForm.selectedPlaceId = matched ? matched.id : "";
     persistRoute();
+    placeBlock.querySelectorAll("[data-place-id]").forEach((pick) => {
+      pick.classList.toggle("is-on", pick.dataset.placeId === routeForm.selectedPlaceId);
+    });
+    const saveBtn = placeBlock.querySelector(".route-save");
+    if (saveBtn) saveBtn.disabled = !routeForm.origin.trim() || places.length >= PLACE_MAX;
   });
   originLabel.append(origin);
+  const placeBlock = document.createElement("div");
+  placeBlock.className = "route-places";
+  if (places.length) {
+    const list = document.createElement("div");
+    list.className = "route-choices";
+    places.forEach((place) => {
+      const chip = document.createElement("span");
+      chip.className = "route-place";
+      const pick = document.createElement("button");
+      pick.type = "button";
+      pick.dataset.placeId = place.id;
+      pick.className = routeForm.selectedPlaceId === place.id ? "is-on" : "";
+      pick.textContent = place.name;
+      pick.addEventListener("click", () => {
+        routeForm.origin = place.address;
+        routeForm.selectedPlaceId = place.id;
+        persistRoute();
+        fillRouteSearch(mountain);
+      });
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "route-place-del";
+      remove.setAttribute("aria-label", `${place.name}を削除`);
+      remove.textContent = "×";
+      remove.addEventListener("click", (event) => {
+        event.stopPropagation();
+        places = places.filter((item) => item.id !== place.id);
+        if (routeForm.selectedPlaceId === place.id) routeForm.selectedPlaceId = "";
+        persistPlaces();
+        persistRoute();
+        fillRouteSearch(mountain);
+      });
+      chip.append(pick, remove);
+      list.append(chip);
+    });
+    placeBlock.append(list);
+  }
+  if (routeForm.saving) {
+    const nameLabel = document.createElement("label");
+    nameLabel.className = "route-field";
+    nameLabel.append("登録名");
+    const name = document.createElement("input");
+    name.type = "text";
+    name.placeholder = "自宅、最寄駅、〇〇の家";
+    name.value = routeForm.placeName;
+    name.autocomplete = "off";
+    name.addEventListener("input", () => {
+      routeForm.placeName = name.value;
+      persistRoute();
+    });
+    nameLabel.append(name);
+    const confirm = document.createElement("button");
+    confirm.type = "button";
+    confirm.className = "route-add";
+    confirm.textContent = "マイ地図に登録";
+    confirm.disabled = !routeForm.origin.trim() || !routeForm.placeName.trim() || places.length >= PLACE_MAX;
+    confirm.addEventListener("click", () => {
+      const address = routeForm.origin.trim();
+      const label = routeForm.placeName.trim();
+      if (!address || !label) return;
+      const existing = places.find((item) => item.address === address || item.name === label);
+      if (existing) {
+        existing.name = label;
+        existing.address = address;
+        routeForm.selectedPlaceId = existing.id;
+      } else if (places.length < PLACE_MAX) {
+        const place = { id: newPlaceId(), name: label, address };
+        places.push(place);
+        routeForm.selectedPlaceId = place.id;
+      }
+      routeForm.saving = false;
+      routeForm.placeName = "";
+      persistPlaces();
+      persistRoute();
+      fillRouteSearch(mountain);
+    });
+    placeBlock.append(nameLabel, confirm);
+  } else {
+    const save = document.createElement("button");
+    save.type = "button";
+    save.className = "route-add route-save";
+    save.textContent = places.length >= PLACE_MAX ? "登録の上限です" : "この出発地をマイ地図に登録";
+    save.disabled = !routeForm.origin.trim() || places.length >= PLACE_MAX;
+    save.addEventListener("click", () => {
+      routeForm.saving = true;
+      routeForm.placeName = routeForm.placeName || "自宅";
+      persistRoute();
+      fillRouteSearch(mountain);
+    });
+    placeBlock.append(save);
+  }
   const vias = document.createElement("div");
   vias.className = "route-vias";
   routeForm.waypoints.forEach((value, index) => {
@@ -866,7 +1003,7 @@ function fillRouteSearch(mountain) {
     note.textContent = "高速代はこのアプリでは出せないので、開いた地図の金額を入れて人数で割ってください。到着は山頂ではなく登山口または最寄駅です。";
     pane.append(buttons, peopleLabel, fareLabel, split, reset, note);
   }
-  box.append(summary, originLabel, vias, addVia, goalKind, goalLabel, timeMode, dateLabel, clockLabel, tabs, pane);
+  box.append(summary, originLabel, placeBlock, vias, addVia, goalKind, goalLabel, timeMode, dateLabel, clockLabel, tabs, pane);
   host.append(box);
 }
 
