@@ -1,0 +1,16 @@
+---
+description: After each approved fix, publish and post the GitHub Pages link
+alwaysApply: true
+---
+
+# 修正のあとに公開リンクを出す
+
+ユーザーが実装・修正を依頼して作業が終わったら、確認用リンクを聞かずに出す。
+
+1. 変更があれば commit する
+2. `origin` の `main` に push する（GitHub Pages は main の `/`）
+3. 返信の末尾に必ずこの URL を書く
+
+https://supermaty11.github.io/hyakumeizan/
+
+反映まで数十秒かかることがある、と短く添えてよい。リンクなしで修正完了としない。

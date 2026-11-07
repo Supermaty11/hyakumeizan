@@ -501,12 +501,28 @@ function loadRouteForm() {
   try {
     const saved = JSON.parse(localStorage.getItem(ROUTE_KEY) || "{}");
     const waypoints = Array.isArray(saved.waypoints) ? saved.waypoints.map((item) => String(item ?? "")) : [];
+    let date = String(saved.date || "");
+    let hour = saved.hour === "" || saved.hour == null ? "" : String(saved.hour);
+    let minute = saved.minute === "" || saved.minute == null ? "" : String(saved.minute);
+    if (!date && saved.datetime) {
+      const [day, clock = ""] = String(saved.datetime).split("T");
+      date = day || "";
+      const [h, m] = clock.split(":");
+      if (h) hour = String(Number(h));
+      if (m) minute = String(Math.round(Number(m) / 5) * 5);
+    }
     return {
       origin: String(saved.origin || ""),
       waypoints,
+      goalKind: saved.goalKind === "station" ? "station" : "trailhead",
+      goal: String(saved.goal || ""),
+      goalMountainId: saved.goalMountainId == null ? "" : String(saved.goalMountainId),
       timeMode: saved.timeMode === "arrive" ? "arrive" : "depart",
-      datetime: String(saved.datetime || ""),
-      people: clamp(Math.round(Number(saved.people) || 1), 1, 99),
+      date,
+      hour,
+      minute,
+      tab: saved.tab === "driving" ? "driving" : "transit",
+      people: saved.people === "" || saved.people == null ? "" : String(clamp(Math.round(Number(saved.people) || 1), 1, 99)),
       fare: String(saved.fare || ""),
       open: saved.open !== false,
     };
@@ -514,9 +530,15 @@ function loadRouteForm() {
     return {
       origin: "",
       waypoints: [],
+      goalKind: "trailhead",
+      goal: "",
+      goalMountainId: "",
       timeMode: "depart",
-      datetime: "",
-      people: 1,
+      date: "",
+      hour: "",
+      minute: "",
+      tab: "transit",
+      people: "",
       fare: "",
       open: true,
     };
@@ -527,11 +549,45 @@ function persistRoute() {
   localStorage.setItem(ROUTE_KEY, JSON.stringify(routeForm));
 }
 
+function pad2(value) {
+  return String(value).padStart(2, "0");
+}
+
+function mountainTitle(mountain) {
+  return titleOf(mountain.name).title;
+}
+
+function defaultGoal(mountain, kind) {
+  const name = mountainTitle(mountain);
+  return kind === "station" ? `${name} 最寄駅` : `${name} 登山口`;
+}
+
+function syncRouteGoal(mountain) {
+  const id = String(mountain.id);
+  if (routeForm.goalMountainId !== id) {
+    routeForm.goal = defaultGoal(mountain, routeForm.goalKind);
+    routeForm.goalMountainId = id;
+  }
+}
+
+function routeGoal(mountain) {
+  syncRouteGoal(mountain);
+  return routeForm.goal.trim() || defaultGoal(mountain, routeForm.goalKind);
+}
+
+function routeUnix() {
+  if (!routeForm.date) return NaN;
+  const hour = routeForm.hour === "" ? 0 : Number(routeForm.hour);
+  const minute = routeForm.minute === "" ? 0 : Number(routeForm.minute);
+  const stamp = new Date(`${routeForm.date}T${pad2(hour)}:${pad2(minute)}:00`).getTime();
+  return Number.isFinite(stamp) ? Math.floor(stamp / 1000) : NaN;
+}
+
 function mapsRouteUrl(mountain, mode) {
-  const dest = `${mountain.lat},${mountain.lng}`;
+  const dest = routeGoal(mountain);
   const origin = routeForm.origin.trim();
   const vias = routeForm.waypoints.map((item) => item.trim()).filter(Boolean);
-  const unix = routeForm.datetime ? Math.floor(new Date(routeForm.datetime).getTime() / 1000) : NaN;
+  const unix = routeUnix();
   if (Number.isFinite(unix) && unix > 0 && origin) {
     const points = [origin, ...vias, dest].map(encodeURIComponent).join("/");
     const leave = routeForm.timeMode === "arrive" ? 1 : 0;
@@ -550,15 +606,30 @@ function mapsRouteUrl(mountain, mode) {
 
 function splitYen() {
   const raw = String(routeForm.fare).replace(/[^\d.]/g, "");
-  if (!raw) return null;
+  const people = Number(routeForm.people);
+  if (!raw || !routeForm.people) return null;
   const yen = Number(raw);
-  if (!Number.isFinite(yen) || yen < 0) return null;
-  return Math.ceil(yen / routeForm.people);
+  if (!Number.isFinite(yen) || yen < 0 || !Number.isFinite(people) || people < 1) return null;
+  return Math.ceil(yen / people);
+}
+
+function routeSelect(value, options, onChange) {
+  const select = document.createElement("select");
+  options.forEach(([id, label]) => {
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = label;
+    if (String(id) === String(value)) option.selected = true;
+    select.append(option);
+  });
+  select.addEventListener("change", () => onChange(select.value));
+  return select;
 }
 
 function fillRouteSearch(mountain) {
   const host = document.getElementById("route-search");
   if (!host) return;
+  syncRouteGoal(mountain);
   host.replaceChildren();
   const box = document.createElement("details");
   box.className = "route";
@@ -623,6 +694,37 @@ function fillRouteSearch(mountain) {
     persistRoute();
     fillRouteSearch(mountain);
   });
+  const goalKind = document.createElement("div");
+  goalKind.className = "route-choices";
+  [
+    ["trailhead", "登山口"],
+    ["station", "最寄駅"],
+  ].forEach(([id, label]) => {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = routeForm.goalKind === id ? "is-on" : "";
+    chip.textContent = label;
+    chip.addEventListener("click", () => {
+      routeForm.goalKind = id;
+      routeForm.goal = defaultGoal(mountain, id);
+      persistRoute();
+      fillRouteSearch(mountain);
+    });
+    goalKind.append(chip);
+  });
+  const goalLabel = document.createElement("label");
+  goalLabel.className = "route-field";
+  goalLabel.append("到着地");
+  const goal = document.createElement("input");
+  goal.type = "text";
+  goal.placeholder = defaultGoal(mountain, routeForm.goalKind);
+  goal.value = routeForm.goal;
+  goal.autocomplete = "off";
+  goal.addEventListener("input", () => {
+    routeForm.goal = goal.value;
+    persistRoute();
+  });
+  goalLabel.append(goal);
   const timeMode = document.createElement("div");
   timeMode.className = "route-choices";
   [
@@ -640,74 +742,137 @@ function fillRouteSearch(mountain) {
     });
     timeMode.append(chip);
   });
-  const timeLabel = document.createElement("label");
-  timeLabel.className = "route-field";
-  timeLabel.append(routeForm.timeMode === "arrive" ? "到着日時" : "出発日時");
-  const time = document.createElement("input");
-  time.type = "datetime-local";
-  time.value = routeForm.datetime;
-  time.addEventListener("input", () => {
-    routeForm.datetime = time.value;
+  const dateLabel = document.createElement("label");
+  dateLabel.className = "route-field";
+  dateLabel.append(routeForm.timeMode === "arrive" ? "到着日" : "出発日");
+  const date = document.createElement("input");
+  date.type = "date";
+  date.value = routeForm.date;
+  date.addEventListener("input", () => {
+    routeForm.date = date.value;
     persistRoute();
   });
-  timeLabel.append(time);
-  const peopleLabel = document.createElement("label");
-  peopleLabel.className = "route-field";
-  peopleLabel.append("人数");
-  const people = document.createElement("input");
-  people.type = "number";
-  people.min = "1";
-  people.max = "99";
-  people.inputMode = "numeric";
-  people.value = String(routeForm.people);
-  people.addEventListener("input", () => {
-    routeForm.people = clamp(Math.round(Number(people.value) || 1), 1, 99);
-    persistRoute();
-    const out = document.getElementById("route-split");
-    if (out) out.textContent = splitLine();
+  dateLabel.append(date);
+  const clockLabel = document.createElement("label");
+  clockLabel.className = "route-field";
+  clockLabel.append("時間");
+  const clock = document.createElement("div");
+  clock.className = "route-time";
+  const hours = [["", "指定なし"]];
+  for (let h = 0; h < 24; h += 1) hours.push([String(h), `${h}時`]);
+  const minutes = [["", "指定なし"]];
+  for (let m = 0; m < 60; m += 5) minutes.push([String(m), `${pad2(m)}分`]);
+  clock.append(
+    routeSelect(routeForm.hour, hours, (value) => {
+      routeForm.hour = value;
+      persistRoute();
+    }),
+    routeSelect(routeForm.minute, minutes, (value) => {
+      routeForm.minute = value;
+      persistRoute();
+    }),
+  );
+  clockLabel.append(clock);
+  const tabs = document.createElement("div");
+  tabs.className = "route-tabs";
+  [
+    ["transit", "公共交通"],
+    ["driving", "車"],
+  ].forEach(([id, label]) => {
+    const tab = document.createElement("button");
+    tab.type = "button";
+    tab.className = routeForm.tab === id ? "is-on" : "";
+    tab.textContent = label;
+    tab.addEventListener("click", () => {
+      const nextKind = id === "transit" ? "station" : "trailhead";
+      if (routeForm.goal === defaultGoal(mountain, routeForm.goalKind)) {
+        routeForm.goalKind = nextKind;
+        routeForm.goal = defaultGoal(mountain, nextKind);
+      }
+      routeForm.tab = id;
+      persistRoute();
+      fillRouteSearch(mountain);
+    });
+    tabs.append(tab);
   });
-  peopleLabel.append(people);
-  const fareLabel = document.createElement("label");
-  fareLabel.className = "route-field";
-  fareLabel.append("地図に出た金額（円）");
-  const fare = document.createElement("input");
-  fare.type = "text";
-  fare.inputMode = "numeric";
-  fare.placeholder = "運賃や高速代";
-  fare.value = routeForm.fare;
-  fare.addEventListener("input", () => {
-    routeForm.fare = fare.value;
-    persistRoute();
-    const out = document.getElementById("route-split");
-    if (out) out.textContent = splitLine();
-  });
-  fareLabel.append(fare);
-  const split = document.createElement("p");
-  split.id = "route-split";
-  split.className = "route-split";
-  split.textContent = splitLine();
+  const pane = document.createElement("div");
+  pane.className = "route-pane";
   const buttons = document.createElement("div");
   buttons.className = "route-actions";
-  const transit = document.createElement("button");
-  transit.type = "button";
-  transit.textContent = "公共交通で検索";
-  transit.addEventListener("click", () => openRoute(mountain, "transit"));
-  const car = document.createElement("button");
-  car.type = "button";
-  car.textContent = "車で検索";
-  car.addEventListener("click", () => openRoute(mountain, "driving"));
-  buttons.append(transit, car);
-  const note = document.createElement("p");
-  note.className = "route-note";
-  note.textContent =
-    "到着は山頂付近です。登山口や最寄駅とずれることがあります。運賃・高速代はこのアプリでは出せないので、開いた地図の金額を上に入れて人数で割ってください。時刻は地図側で直してください。";
-  box.append(summary, originLabel, vias, addVia, timeMode, timeLabel, peopleLabel, fareLabel, split, buttons, note);
+  if (routeForm.tab === "transit") {
+    const transit = document.createElement("button");
+    transit.type = "button";
+    transit.textContent = "公共交通で検索";
+    transit.addEventListener("click", () => openRoute(mountain, "transit"));
+    buttons.append(transit);
+    const note = document.createElement("p");
+    note.className = "route-note";
+    note.textContent = "到着は山頂ではなく、上の到着地（登山口または最寄駅）で検索します。違う場所なら到着地を書き換えてください。";
+    pane.append(buttons, note);
+  } else {
+    const car = document.createElement("button");
+    car.type = "button";
+    car.textContent = "車で検索";
+    car.addEventListener("click", () => openRoute(mountain, "driving"));
+    buttons.append(car);
+    const peopleLabel = document.createElement("label");
+    peopleLabel.className = "route-field";
+    peopleLabel.append("人数");
+    const people = document.createElement("input");
+    people.type = "number";
+    people.min = "1";
+    people.max = "99";
+    people.inputMode = "numeric";
+    people.placeholder = "何人で割るか";
+    people.value = routeForm.people;
+    people.addEventListener("input", () => {
+      routeForm.people = people.value === "" ? "" : String(clamp(Math.round(Number(people.value) || 1), 1, 99));
+      persistRoute();
+      const out = document.getElementById("route-split");
+      if (out) out.textContent = splitLine();
+    });
+    peopleLabel.append(people);
+    const fareLabel = document.createElement("label");
+    fareLabel.className = "route-field";
+    fareLabel.append("高速代などの金額（円）");
+    const fare = document.createElement("input");
+    fare.type = "text";
+    fare.inputMode = "numeric";
+    fare.placeholder = "地図に出た金額";
+    fare.value = routeForm.fare;
+    fare.addEventListener("input", () => {
+      routeForm.fare = fare.value;
+      persistRoute();
+      const out = document.getElementById("route-split");
+      if (out) out.textContent = splitLine();
+    });
+    fareLabel.append(fare);
+    const split = document.createElement("p");
+    split.id = "route-split";
+    split.className = "route-split";
+    split.textContent = splitLine();
+    const reset = document.createElement("button");
+    reset.type = "button";
+    reset.className = "route-reset";
+    reset.textContent = "人数と金額をリセット";
+    reset.addEventListener("click", () => {
+      routeForm.people = "";
+      routeForm.fare = "";
+      persistRoute();
+      fillRouteSearch(mountain);
+    });
+    const note = document.createElement("p");
+    note.className = "route-note";
+    note.textContent = "高速代はこのアプリでは出せないので、開いた地図の金額を入れて人数で割ってください。到着は山頂ではなく登山口または最寄駅です。";
+    pane.append(buttons, peopleLabel, fareLabel, split, reset, note);
+  }
+  box.append(summary, originLabel, vias, addVia, goalKind, goalLabel, timeMode, dateLabel, clockLabel, tabs, pane);
   host.append(box);
 }
 
 function splitLine() {
   const yen = splitYen();
-  if (yen == null) return `1人あたりは、金額を入れると表示します（${routeForm.people}人）`;
+  if (yen == null) return "人数と金額を入れると、1人あたりを表示します";
   return `1人あたり ${yen.toLocaleString("ja-JP")} 円（${routeForm.people}人）`;
 }
 

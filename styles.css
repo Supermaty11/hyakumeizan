@@ -415,13 +415,36 @@ dd { margin: 2px 0 0; }
   color: #5c6460;
 }
 .route-field input,
+.route-field select,
 .route-add,
-.route-remove {
+.route-remove,
+.route-reset {
   width: 100%;
   border: 1px solid #d5d8d2;
   background: #fff;
   border-radius: 8px;
   padding: 8px 10px;
+}
+.route-time { display: flex; gap: 6px; }
+.route-time select { flex: 1; min-width: 0; }
+.route-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 12px;
+}
+.route-tabs button {
+  border: 1px solid #d5d8d2;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.route-tabs button.is-on { background: #1f3d32; border-color: #1f3d32; color: #f4f6f3; }
+.route-reset {
+  margin-top: 8px;
+  color: #3d4541;
+  cursor: pointer;
 }
 .route-via-row { display: flex; gap: 6px; }
 .route-via-row input { flex: 1; min-width: 0; }
@@ -507,7 +530,8 @@ dd { margin: 2px 0 0; }
   .search input,
   .record input,
   .record textarea,
-  .route input {
+  .route input,
+  .route select {
     font-size: 16px;
   }
   #results .filters {
