@@ -741,9 +741,47 @@ function mapsAppUrl(mountain, mode) {
   return `comgooglemaps://?${parts.join("&")}`;
 }
 
+function hasRouteDate() {
+  return Boolean(routeForm.date);
+}
+
+function yahooTransitUrl(mountain) {
+  const dest = routeGoal(mountain);
+  const origin = routeForm.origin.trim();
+  const vias = routeForm.waypoints.map((item) => item.trim()).filter(Boolean);
+  const params = new URLSearchParams();
+  if (origin) params.set("from", origin);
+  params.set("to", dest);
+  vias.slice(0, 3).forEach((via, index) => {
+    params.set(index === 0 ? "via" : `via${index + 1}`, via);
+  });
+  if (routeForm.date) {
+    const [year, month, day] = routeForm.date.split("-");
+    const hour = routeForm.hour === "" ? 8 : Number(routeForm.hour);
+    const minute = routeForm.minute === "" ? 0 : Number(routeForm.minute);
+    params.set("y", year);
+    params.set("m", month);
+    params.set("d", day);
+    params.set("hh", pad2(hour));
+    params.set("m1", String(Math.floor(minute / 10)));
+    params.set("m2", String(minute % 10));
+    params.set("type", routeForm.timeMode === "arrive" ? "4" : "1");
+  }
+  return `https://transit.yahoo.co.jp/search/result?${params.toString()}`;
+}
+
 function routeSearchLink(mountain, mode, label) {
   const link = document.createElement("a");
   link.textContent = label;
+  const useYahoo = mode === "transit" && hasRouteDate();
+  if (useYahoo) {
+    link.href = yahooTransitUrl(mountain);
+    if (!isIOS()) {
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    }
+    return link;
+  }
   if (isIOS()) {
     link.href = mapsAppUrl(mountain, mode);
   } else {
@@ -1048,10 +1086,18 @@ function fillRouteSearch(mountain) {
   const buttons = document.createElement("div");
   buttons.className = "route-actions";
   if (routeForm.tab === "transit") {
-    buttons.append(routeSearchLink(mountain, "transit", "公共交通で検索"));
+    buttons.append(
+      routeSearchLink(
+        mountain,
+        "transit",
+        hasRouteDate() ? "乗換案内で検索" : "公共交通で検索",
+      ),
+    );
     const note = document.createElement("p");
     note.className = "route-note";
-    note.textContent = "到着は山頂ではなく、上の到着地（登山口または最寄駅）で検索します。違う場所なら到着地を書き換えてください。";
+    note.textContent = hasRouteDate()
+      ? "日付を入れると乗換案内で、出発・到着時刻つきで検索します。時間を指定しない場合は 8:00 です。到着は山頂ではなく、上の到着地です。"
+      : "日付を空欄のままだと Google マップで検索します。到着は山頂ではなく、上の到着地（登山口または最寄駅）です。";
     pane.append(buttons, note);
   } else {
     buttons.append(routeSearchLink(mountain, "driving", "車で検索"));
