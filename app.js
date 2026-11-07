@@ -15,6 +15,7 @@ const ACCESS_OPTIONS = [
 ];
 const KEY = "hyakumeizan-records-v1";
 const LAYOUT_KEY = "hyakumeizan-layout-v1";
+const ROUTE_KEY = "hyakumeizan-route-v1";
 const PHOTO_DB_NAME = "hyakumeizan-photos-v1";
 const PHOTO_STORE = "photos";
 const PHOTO_MAX = 5;
@@ -47,6 +48,7 @@ let paleLayer;
 let mapMode = "photo";
 let pins;
 const layout = loadLayout();
+let routeForm = loadRouteForm();
 
 function isNarrow() {
   return window.innerWidth < 980;
@@ -493,6 +495,225 @@ function searchDisplay() {
 function displayedMountains() {
   if (state.tab === "search") return searchDisplay().mountains;
   return recordMountains();
+}
+
+function loadRouteForm() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(ROUTE_KEY) || "{}");
+    const waypoints = Array.isArray(saved.waypoints) ? saved.waypoints.map((item) => String(item ?? "")) : [];
+    return {
+      origin: String(saved.origin || ""),
+      waypoints,
+      timeMode: saved.timeMode === "arrive" ? "arrive" : "depart",
+      datetime: String(saved.datetime || ""),
+      people: clamp(Math.round(Number(saved.people) || 1), 1, 99),
+      fare: String(saved.fare || ""),
+      open: saved.open !== false,
+    };
+  } catch {
+    return {
+      origin: "",
+      waypoints: [],
+      timeMode: "depart",
+      datetime: "",
+      people: 1,
+      fare: "",
+      open: true,
+    };
+  }
+}
+
+function persistRoute() {
+  localStorage.setItem(ROUTE_KEY, JSON.stringify(routeForm));
+}
+
+function mapsRouteUrl(mountain, mode) {
+  const dest = `${mountain.lat},${mountain.lng}`;
+  const origin = routeForm.origin.trim();
+  const vias = routeForm.waypoints.map((item) => item.trim()).filter(Boolean);
+  const unix = routeForm.datetime ? Math.floor(new Date(routeForm.datetime).getTime() / 1000) : NaN;
+  if (Number.isFinite(unix) && unix > 0 && origin) {
+    const points = [origin, ...vias, dest].map(encodeURIComponent).join("/");
+    const leave = routeForm.timeMode === "arrive" ? 1 : 0;
+    const travel = mode === "transit" ? 3 : 0;
+    return `https://www.google.com/maps/dir/${points}/data=!4m6!4m5!2m3!6e${leave}!7e2!8j${unix}!3e${travel}`;
+  }
+  const params = new URLSearchParams({
+    api: "1",
+    destination: dest,
+    travelmode: mode,
+  });
+  if (origin) params.set("origin", origin);
+  if (vias.length) params.set("waypoints", vias.join("|"));
+  return `https://www.google.com/maps/dir/?${params.toString()}`;
+}
+
+function splitYen() {
+  const raw = String(routeForm.fare).replace(/[^\d.]/g, "");
+  if (!raw) return null;
+  const yen = Number(raw);
+  if (!Number.isFinite(yen) || yen < 0) return null;
+  return Math.ceil(yen / routeForm.people);
+}
+
+function fillRouteSearch(mountain) {
+  const host = document.getElementById("route-search");
+  if (!host) return;
+  host.replaceChildren();
+  const box = document.createElement("details");
+  box.className = "route";
+  box.open = routeForm.open;
+  box.addEventListener("toggle", () => {
+    routeForm.open = box.open;
+    persistRoute();
+  });
+  const summary = document.createElement("summary");
+  summary.textContent = "交通手段・ルートを検索する";
+  const originLabel = document.createElement("label");
+  originLabel.className = "route-field";
+  originLabel.append("出発地");
+  const origin = document.createElement("input");
+  origin.type = "text";
+  origin.placeholder = "自宅、最寄駅、住所";
+  origin.value = routeForm.origin;
+  origin.autocomplete = "off";
+  origin.addEventListener("input", () => {
+    routeForm.origin = origin.value;
+    persistRoute();
+  });
+  originLabel.append(origin);
+  const vias = document.createElement("div");
+  vias.className = "route-vias";
+  routeForm.waypoints.forEach((value, index) => {
+    const row = document.createElement("label");
+    row.className = "route-field route-via";
+    row.append(`中継地 ${index + 1}`);
+    const line = document.createElement("div");
+    line.className = "route-via-row";
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "経由する駅・場所";
+    input.value = value;
+    input.autocomplete = "off";
+    input.addEventListener("input", () => {
+      routeForm.waypoints[index] = input.value;
+      persistRoute();
+    });
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "route-remove";
+    remove.textContent = "削除";
+    remove.addEventListener("click", () => {
+      routeForm.waypoints.splice(index, 1);
+      persistRoute();
+      fillRouteSearch(mountain);
+    });
+    line.append(input, remove);
+    row.append(line);
+    vias.append(row);
+  });
+  const addVia = document.createElement("button");
+  addVia.type = "button";
+  addVia.className = "route-add";
+  addVia.textContent = "中継地を追加";
+  addVia.disabled = routeForm.waypoints.length >= 8;
+  addVia.addEventListener("click", () => {
+    routeForm.waypoints.push("");
+    routeForm.open = true;
+    persistRoute();
+    fillRouteSearch(mountain);
+  });
+  const timeMode = document.createElement("div");
+  timeMode.className = "route-choices";
+  [
+    ["depart", "出発"],
+    ["arrive", "到着"],
+  ].forEach(([id, label]) => {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = routeForm.timeMode === id ? "is-on" : "";
+    chip.textContent = label;
+    chip.addEventListener("click", () => {
+      routeForm.timeMode = id;
+      persistRoute();
+      fillRouteSearch(mountain);
+    });
+    timeMode.append(chip);
+  });
+  const timeLabel = document.createElement("label");
+  timeLabel.className = "route-field";
+  timeLabel.append(routeForm.timeMode === "arrive" ? "到着日時" : "出発日時");
+  const time = document.createElement("input");
+  time.type = "datetime-local";
+  time.value = routeForm.datetime;
+  time.addEventListener("input", () => {
+    routeForm.datetime = time.value;
+    persistRoute();
+  });
+  timeLabel.append(time);
+  const peopleLabel = document.createElement("label");
+  peopleLabel.className = "route-field";
+  peopleLabel.append("人数");
+  const people = document.createElement("input");
+  people.type = "number";
+  people.min = "1";
+  people.max = "99";
+  people.inputMode = "numeric";
+  people.value = String(routeForm.people);
+  people.addEventListener("input", () => {
+    routeForm.people = clamp(Math.round(Number(people.value) || 1), 1, 99);
+    persistRoute();
+    const out = document.getElementById("route-split");
+    if (out) out.textContent = splitLine();
+  });
+  peopleLabel.append(people);
+  const fareLabel = document.createElement("label");
+  fareLabel.className = "route-field";
+  fareLabel.append("地図に出た金額（円）");
+  const fare = document.createElement("input");
+  fare.type = "text";
+  fare.inputMode = "numeric";
+  fare.placeholder = "運賃や高速代";
+  fare.value = routeForm.fare;
+  fare.addEventListener("input", () => {
+    routeForm.fare = fare.value;
+    persistRoute();
+    const out = document.getElementById("route-split");
+    if (out) out.textContent = splitLine();
+  });
+  fareLabel.append(fare);
+  const split = document.createElement("p");
+  split.id = "route-split";
+  split.className = "route-split";
+  split.textContent = splitLine();
+  const buttons = document.createElement("div");
+  buttons.className = "route-actions";
+  const transit = document.createElement("button");
+  transit.type = "button";
+  transit.textContent = "公共交通で検索";
+  transit.addEventListener("click", () => openRoute(mountain, "transit"));
+  const car = document.createElement("button");
+  car.type = "button";
+  car.textContent = "車で検索";
+  car.addEventListener("click", () => openRoute(mountain, "driving"));
+  buttons.append(transit, car);
+  const note = document.createElement("p");
+  note.className = "route-note";
+  note.textContent =
+    "到着は山頂付近です。登山口や最寄駅とずれることがあります。運賃・高速代はこのアプリでは出せないので、開いた地図の金額を上に入れて人数で割ってください。時刻は地図側で直してください。";
+  box.append(summary, originLabel, vias, addVia, timeMode, timeLabel, peopleLabel, fareLabel, split, buttons, note);
+  host.append(box);
+}
+
+function splitLine() {
+  const yen = splitYen();
+  if (yen == null) return `1人あたりは、金額を入れると表示します（${routeForm.people}人）`;
+  return `1人あたり ${yen.toLocaleString("ja-JP")} 円（${routeForm.people}人）`;
+}
+
+function openRoute(mountain, mode) {
+  const url = mapsRouteUrl(mountain, mode);
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
 function yamapUrl(mountain) {
@@ -957,11 +1178,14 @@ function renderDetail() {
   yamap.rel = "noopener";
   yamap.textContent = "YAMAPでこの山を見る";
   actions.append(zoom, yamap);
+  const routeSearch = document.createElement("div");
+  routeSearch.id = "route-search";
   const hint = document.createElement("p");
   hint.className = "hint";
   hint.textContent =
     "引くと衛星写真です。拡大すると淡色の地形図になります。行程の文章とルートの線は YAMAP で確認してください。";
-  body.append(area, h2, subLine, elev, place, facts, routes, record, photos, actions, hint);
+  body.append(area, h2, subLine, elev, place, facts, routes, record, photos, actions, routeSearch, hint);
+  fillRouteSearch(mountain);
   if (photoPreview.mountainId !== String(mountain.id)) {
     photoPreview = { mountainId: String(mountain.id), photoId: null };
   }
@@ -1139,8 +1363,10 @@ function setupMap() {
     bounceAtZoomLimits: false,
   });
   L.control.zoom({ position: "bottomright" }).addTo(map);
+  map.attributionControl.setPrefix("");
+  map.attributionControl.setPosition("bottomleft");
   const attribution =
-    "出典：<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank' rel='noopener'>国土地理院</a>";
+    "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank' rel='noopener'>国土地理院</a>";
   photoLayer = L.tileLayer(PHOTO, { attribution, maxZoom: 18, minZoom: 5 });
   paleLayer = L.tileLayer(PALE, { attribution, maxZoom: 18, minZoom: 5 });
   photoLayer.addTo(map);
