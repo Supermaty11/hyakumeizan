@@ -534,7 +534,7 @@ dd { margin: 2px 0 0; }
     top: auto;
     left: 12px;
     right: 12px;
-    bottom: max(12px, env(safe-area-inset-bottom));
+    bottom: max(12px, env(safe-area-inset-bottom), var(--kb-height, 0px));
     width: auto;
     max-width: none;
   }

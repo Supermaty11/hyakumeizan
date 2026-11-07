@@ -134,9 +134,28 @@ function pinPage() {
 }
 
 function applyKeyboardOffset() {
+  const root = document.documentElement;
   const vv = window.visualViewport;
-  const offset = vv && isField(document.activeElement) ? Math.max(0, Math.round(vv.offsetTop || 0)) : 0;
-  document.documentElement.style.setProperty("--kb-offset", `${offset}px`);
+  const typing = isNarrow() && isField(document.activeElement);
+  if (!typing || !vv) {
+    root.style.setProperty("--kb-offset", "0px");
+    root.style.setProperty("--kb-height", "0px");
+    root.classList.remove("is-keyboard");
+    return;
+  }
+  const offset = Math.max(0, Math.round(vv.offsetTop || 0));
+  const kb = Math.max(0, Math.round(window.innerHeight - vv.height - offset));
+  root.style.setProperty("--kb-offset", `${offset}px`);
+  root.style.setProperty("--kb-height", `${kb}px`);
+  root.classList.add("is-keyboard");
+  const visible = Math.max(140, Math.round(vv.height) - 16);
+  const sheet = Math.min(Math.round(window.innerHeight * 0.4), visible);
+  root.style.setProperty("--mobile-sheet-h", `${Math.max(140, sheet)}px`);
+}
+
+function revealField(el) {
+  if (!isField(el)) return;
+  el.scrollIntoView({ block: "center", inline: "nearest" });
 }
 
 function applyLayout() {
@@ -194,7 +213,11 @@ function setupLayout() {
   const onViewport = () => {
     pinPage();
     applyKeyboardOffset();
-    if (!isField(document.activeElement)) applyLayout();
+    if (isField(document.activeElement)) {
+      requestAnimationFrame(() => revealField(document.activeElement));
+      return;
+    }
+    applyLayout();
   };
   window.addEventListener("resize", onViewport);
   if (window.visualViewport) {
@@ -211,7 +234,7 @@ function setupLayout() {
     requestAnimationFrame(() => {
       pinPage();
       applyKeyboardOffset();
-      event.target.scrollIntoView({ block: "nearest", inline: "nearest" });
+      revealField(event.target);
     });
   });
   document.addEventListener("focusout", () => {
@@ -219,7 +242,7 @@ function setupLayout() {
       pinPage();
       applyKeyboardOffset();
       if (!isField(document.activeElement)) applyLayout();
-    }, 80);
+    }, 180);
   });
   window.addEventListener("pageshow", reviveView);
   document.addEventListener("visibilitychange", () => {
