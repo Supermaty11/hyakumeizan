@@ -221,10 +221,22 @@ function setupLayout() {
       if (!isField(document.activeElement)) applyLayout();
     }, 80);
   });
-  window.addEventListener("pageshow", () => {
-    pinPage();
-    applyKeyboardOffset();
-    applyLayout();
+  window.addEventListener("pageshow", reviveView);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") reviveView();
+  });
+}
+
+function reviveView() {
+  pinPage();
+  applyKeyboardOffset();
+  applyLayout();
+  if (!map) return;
+  requestAnimationFrame(() => {
+    map.invalidateSize();
+    const center = map.getCenter();
+    const zoom = map.getZoom();
+    if (center) map.setView(center, zoom, { animate: false });
   });
 }
 
@@ -692,6 +704,33 @@ function mapsRouteUrl(mountain, mode) {
   return `https://www.google.com/maps/dir/?${params.toString()}`;
 }
 
+function isIOS() {
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+function mapsAppUrl(mountain, mode) {
+  const dest = routeGoal(mountain);
+  const origin = routeForm.origin.trim();
+  const vias = routeForm.waypoints.map((item) => item.trim()).filter(Boolean);
+  const daddr = [...vias, dest].map(encodeURIComponent).join("+to:");
+  const parts = [`daddr=${daddr}`, `directionsmode=${mode === "transit" ? "transit" : "driving"}`];
+  if (origin) parts.unshift(`saddr=${encodeURIComponent(origin)}`);
+  return `comgooglemaps://?${parts.join("&")}`;
+}
+
+function routeSearchLink(mountain, mode, label) {
+  const link = document.createElement("a");
+  link.textContent = label;
+  if (isIOS()) {
+    link.href = mapsAppUrl(mountain, mode);
+  } else {
+    link.href = mapsRouteUrl(mountain, mode);
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  }
+  return link;
+}
+
 function splitYen() {
   const raw = String(routeForm.fare).replace(/[^\d.]/g, "");
   const people = Number(routeForm.people);
@@ -986,21 +1025,13 @@ function fillRouteSearch(mountain) {
   const buttons = document.createElement("div");
   buttons.className = "route-actions";
   if (routeForm.tab === "transit") {
-    const transit = document.createElement("button");
-    transit.type = "button";
-    transit.textContent = "公共交通で検索";
-    transit.addEventListener("click", () => openRoute(mountain, "transit"));
-    buttons.append(transit);
+    buttons.append(routeSearchLink(mountain, "transit", "公共交通で検索"));
     const note = document.createElement("p");
     note.className = "route-note";
     note.textContent = "到着は山頂ではなく、上の到着地（登山口または最寄駅）で検索します。違う場所なら到着地を書き換えてください。";
     pane.append(buttons, note);
   } else {
-    const car = document.createElement("button");
-    car.type = "button";
-    car.textContent = "車で検索";
-    car.addEventListener("click", () => openRoute(mountain, "driving"));
-    buttons.append(car);
+    buttons.append(routeSearchLink(mountain, "driving", "車で検索"));
     const peopleLabel = document.createElement("label");
     peopleLabel.className = "route-field";
     peopleLabel.append("人数");
@@ -1060,21 +1091,6 @@ function splitLine() {
   const yen = splitYen();
   if (yen == null) return "人数と金額を入れると、1人あたりを表示します";
   return `1人あたり ${yen.toLocaleString("ja-JP")} 円（${routeForm.people}人）`;
-}
-
-function openRoute(mountain, mode) {
-  const url = mapsRouteUrl(mountain, mode);
-  if (isNarrow()) {
-    window.location.assign(url);
-    return;
-  }
-  const link = document.createElement("a");
-  link.href = url;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  document.body.append(link);
-  link.click();
-  link.remove();
 }
 
 function yamapUrl(mountain) {

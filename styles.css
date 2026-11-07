@@ -499,13 +499,16 @@ dd { margin: 2px 0 0; }
 }
 .route-split { margin: 8px 0 0; font-size: 13px; font-weight: 650; }
 .route-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-.route-actions button {
+.route-actions button,
+.route-actions a {
   border: 0;
   background: #1f3d32;
   color: #f4f6f3;
   border-radius: 8px;
   padding: 9px 10px;
   cursor: pointer;
+  text-align: center;
+  text-decoration: none;
 }
 .route-note { margin: 8px 0 0; font-size: 11px; line-height: 1.5; color: #5c6460; }
 
